@@ -4,10 +4,15 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const LiveBoard = require('./helpers/liveBoard.js');
 const util = require('./helpers/utils');
+var mongoose = require('mongoose');
+var bluebird = require('bluebird');
+mongoose.Promise = bluebird;
+
 
 const port = 3000;
-// When there is data to store
-// mongoose.connect('mongodb://localhost/drawmie-dev');
+
+//connect the database
+mongoose.connect('mongodb://localhost/drawmie');
 
 require('./middleware.js')(app, express);
 

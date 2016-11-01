@@ -14,4 +14,4 @@ module.exports = function(app, express){
 // app.get('/board/:boardId', handler.getBoard);
 //
 // // Archive board by id (Server to Server)
-// app.post('board/:archiveId', handler.archiveBoard);
+// app.post('board/:archiveId', handler.archiveBoard); 
