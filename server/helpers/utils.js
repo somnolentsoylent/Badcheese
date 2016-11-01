@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Board = require('../models/boardModel.js');
 const LiveBoard = require('./liveBoard');
 
 // Replace mongoose's outdated Promise library
