@@ -23,7 +23,9 @@ export default class Chat extends React.Component {
     	message: ''
     }
   }
-
+  componentDidMount() {
+  	const socket = this.props.socket;
+  }
   sendMessage() {
   	this.setState({message: ''});
   }

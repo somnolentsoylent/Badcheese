@@ -11,12 +11,15 @@ export default class App extends React.Component {
     this.setState({token: token, user: user});
   }
   componentDidMount() {
-    this.handleToken()
+    this.checkAuth()
   }
   componentDidUpdate() {
-    this.handleToken()
+    this.checkAuth()
   }
-  handleToken() {
+  signOut() {
+
+  }
+  checkAuth() {
     //HANDLE AUTH
       //Check local storage for Token
         //If token, grab user info and set token
@@ -28,7 +31,7 @@ export default class App extends React.Component {
       return <Auth login={this.login.bind(this)}/>
     } else {
       return (<div>
-            <Nav/>
+            <Nav signOut={this.signOut.bind(this)}/>
             <div>
               {this.props.children &&  React.cloneElement(this.props.children, {
                 user: this.state.user
