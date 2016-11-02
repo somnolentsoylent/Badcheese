@@ -4,16 +4,26 @@ var Schema = mongoose.Schema;
 var SessionSchema = new Schema({
 
   id: Schema.Types.ObjectId,
-  invitedUsers: [{
+  invitedUsers: [
     {
-      User: {type: Schema.Types.ObjectId, ref: 'User'},
+      User: {type: Schema.Types.ObjectId}, //, ref: 'User'},
      Permission: String
     }
-  }],
+  ],
   imageUrl: String,
-  name: String,
-  host: { type: Schema.Types.ObjectId, ref: 'User' },
-  private: Boolean
+  name: { 
+    type: String,
+    required: true
+  },
+  host: { 
+    type: Schema.Types.ObjectId, 
+    ref: 'User',
+    // required: true
+  },
+  private: {
+    type: Boolean,
+    required: true
+  }
 });
 
 module.exports = mongoose.model('Session', SessionSchema);
