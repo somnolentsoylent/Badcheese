@@ -4,8 +4,8 @@ import React from 'react';
   const video = {
       background:'black',
       color: 'white',
-      width: window.document.body.offsetWidth * .30,
-      height: window.document.body.offsetHeight * .45,
+  	  width: window.document.body.offsetWidth * .30,
+      height: window.document.body.offsetHeight * .45
     }
 
   const player = {
