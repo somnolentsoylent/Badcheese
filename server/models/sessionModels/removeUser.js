@@ -2,12 +2,12 @@ var Session = require('../../schemas/sessionSchema');
 
 module.exports = (sessionId, userId) => {
   return Session.findOneAndUpdate({
-    'id': sessionId
+    '_id': sessionId
   }, {
     $pull: {
       invitedUsers: {
         User: userId
       }
     }
-  });
+  }).exec();
 };

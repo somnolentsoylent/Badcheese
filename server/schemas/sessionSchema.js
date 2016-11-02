@@ -2,11 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var SessionSchema = new Schema({
-
-  id: Schema.Types.ObjectId,
   invitedUsers: [
     {
-      User: {type: Number}, //Schema.Types.ObjectId}, //, ref: 'User'},
+      User: Number, //{type: Schema.Types.ObjectId, ref: 'User'},
      Permission: String
     }
   ],

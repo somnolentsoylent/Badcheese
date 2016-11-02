@@ -11,12 +11,16 @@ var testSession = {
   private: false
 };
 
+var testSessionId;
+
 var testSession1 = {
   // invitedUsers: [{User: 1, Permission: 'write'}],
   imageUrl: 'img.url',
   name: 'Test Session1',
   private: false
 };
+
+var testSession1Id;
 
 
 
@@ -38,6 +42,7 @@ describe('Session Models', function(){
         return Session.findOne({name: 'Test Session'}).exec()
       })
       .then(function(session){
+        testSessionId = session._id;
         expect(session.name).to.equal('Test Session');
         done();
       })
@@ -67,14 +72,34 @@ describe('Session Models', function(){
 
   describe('Add User', function(){
     it('should add a new user to the invited list', function(done){
-      sessionModels.addUser(testSession.id, 9, 'readOnly')
+      // console.log('---------', testSession._id)
+      sessionModels.addUser(testSessionId, 9, 'readOnly')
       .then(function(result){
         return Session.findOne({name: 'Test Session'}).exec()
       })
       .then(function(session){
+        // console.log(session.invitedUsers)
         expect(session.invitedUsers.length).to.equal(1);
         expect(session.invitedUsers[0].User).to.equal(9);
         expect(session.invitedUsers[0].Permission).to.equal('readOnly');
+        done();
+      })
+      .catch(function(err){
+        console.log(err);
+        done();
+      });
+    });
+    it('should add a new user to the invited list', function(done){
+      // console.log('---------', testSession._id)
+      sessionModels.addUser(testSessionId, 40, 'writeOnly')
+      .then(function(result){
+        return Session.findOne({name: 'Test Session'}).exec()
+      })
+      .then(function(session){
+        // console.log(session.invitedUsers)
+        expect(session.invitedUsers.length).to.equal(2);
+        expect(session.invitedUsers[1].User).to.equal(40);
+        expect(session.invitedUsers[1].Permission).to.equal('writeOnly');
         done();
       })
       .catch(function(err){
@@ -86,15 +111,15 @@ describe('Session Models', function(){
 
   describe('Remove User', function(){
     it('should remove a user from the invited list', function(done){
-      sessionModels.addUser(testSession.id, 100, 'writeOnly')
+      sessionModels.addUser(testSessionId, 100, 'writeOnly')
       .then(function(result){
-        sessionModels.removeUser(testSession.id, 9)
+        sessionModels.removeUser(testSessionId, 9)
         .then(function(result){
           return Session.findOne({name: 'Test Session'}).exec()
         })
         .then(function(session){
-          expect(session.invitedUsers.length).to.equal(1);
-          expect(session.invitedUsers[0].User).to.equal(100);
+          expect(session.invitedUsers.length).to.equal(2);
+          expect(session.invitedUsers[0].User).to.equal(40);
           expect(session.invitedUsers[0].Permission).to.equal('writeOnly');
 
           done();
@@ -105,21 +130,20 @@ describe('Session Models', function(){
         done();
       });
     });
+
   });
 
   describe('Delete Session', function(){
     it('should delete a session from the database', function(done){
       sessionModels.addSession(testSession1)
       .then(function(result){
-        sessionModels.deleteSession(testSession.id)
+        sessionModels.deleteSession(testSessionId)
         .then(function(result){
           return Session.find({}).exec()
         })
         .then(function(sessions){
           expect(sessions.length).to.equal(1);
           expect(sessions[0].name).to.equal('Test Session1');
-
-
           done();
           })
         })

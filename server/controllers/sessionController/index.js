@@ -1,3 +1,7 @@
 module.exports = {
-  createSession: require('./createSession')
+  addSession: require('./addSession'),
+  addUser: require('./addUser'),
+  deleteSession: require('./deleteSession'),
+  removeUser: require('./removeUser'),
+  sessionSearch: require('./sessionSearch')
 }

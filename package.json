@@ -34,6 +34,7 @@
     "mocha": "^3.0.2",
     "react-addons-test-utils": "^0.14.7",
     "sinon": "^1.17.3",
+    "supertest": "^2.0.1",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1"
   },
