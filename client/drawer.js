@@ -1,6 +1,6 @@
 var initDrawer = function initDrawer() {
   var data = {
-    color: 'aliceBlue',
+    color: 'black',
     shapes: {},
     currentShape: null,
     newShapes: [],

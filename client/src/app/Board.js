@@ -1,7 +1,9 @@
 import React from 'react';
-import ToolBar from './Toolbar.jsx';
+import ToolBar from './Toolbar.js';
 import Render from '../../render.js';
 import initDrawer from '../../drawer.js';
+import Video from './Video';
+import Chat from './Chat';
 
 class Board extends React.Component {
   constructor(props) {
@@ -13,10 +15,9 @@ class Board extends React.Component {
   // when component mounts board gets created and drawer gets initiated and set to state
   componentDidMount() {
     this.updateCanvas();
-    const currentRoom = window.location.hash.slice(1);
+    const currentRoom = window.location.hash.slice(2);
     const socket = io();
     socket.emit('addMeToRoom', currentRoom);
-
     const drawer = initDrawer();
     this.setState({ draw: drawer });
     const render = Render('draw-canvas', drawer);
@@ -118,33 +119,49 @@ class Board extends React.Component {
   }
   render() {
     const container = {
-      marginLeft: '10%',
-      paddingLeft: 30,
-      position: 'fixed'
-    };
-    const canvas = {
-      borderRadius: '5px',
+      display: 'block',
+      float: 'left'
     };
     const tools = {
       listStyleType: 'none',
+      backgroundColor: 'white',
       marginTop: '0px',
-      position: 'fixed'
+      float: 'left',
+      width: window.document.body.offsetWidth * .10,
+      height: window.document.body.offsetHeight * .90 - 50
     };
-    const header = {
-      margin: '200px',
-    };
+    const comm = {
+      float: 'left'
+    }
+    const video = {
+      background:'black',
+      width: window.document.body.offsetWidth * .30,
+      height: window.document.body.offsetHeight * .45,
+    }
+    const chat = {
+      width: window.document.body.offsetWidth * .30,
+      height: window.document.body.offsetHeight * .45 - 50,
+      backgroundColor: 'white'
+    }
+    const topBar = {
+      height: window.document.body.offsetHeight * .10,
+      background: 'white'
+    }
 
     return (
         <div>
           {/* window hash determines what room the user is in. Here that room gets displayed on the page */}
-          <h1>Drawmie {window.location.hash}</h1>
+          <div style={topBar}>Drawmie {window.location.hash}</div>
           {/* this tag takes you back to the landing page */}
-          <h1><a style ={{color: '#681f03'}} href='/'>New Drawmie</a></h1>
           <div className="container-fluid" style={tools}>
             <ToolBar draw={ this.state.draw } />
           </div>
           <div className="container-fluid" style={container} >
-            <canvas id="draw-canvas" style={canvas} ref="canvas" width={window.document.body.offsetWidth * .80} height={window.document.body.offsetHeight * .77} />
+            <canvas id="draw-canvas" ref="canvas" width={window.document.body.offsetWidth * .60} height={window.document.body.offsetHeight * .90 - 50} />
+          </div>
+          <div style={comm}>
+            <Video style={video}/>
+            <Chat style={chat}/>
           </div>
         </div>
     );
