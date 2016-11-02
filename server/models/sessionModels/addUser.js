@@ -3,7 +3,7 @@ var Session = require('../../schemas/sessionSchema');
 //add a given user to the invited list
 module.exports = (sessionId, userId, permission) => {
   return Session.findOneAndUpdate({
-    'id': sessionId
+    '_id': sessionId
   }, {
     $push: {
       invitedUsers: {
@@ -11,5 +11,5 @@ module.exports = (sessionId, userId, permission) => {
         Permission: permission
       }
     }
-  })
+  }).exec();
 };

@@ -7,7 +7,12 @@ module.exports = function(app, express){
   app.get('/board', handler.getNewBoard);
 
   //session actions
-  app.post('/api/sessions/createSession', sessionController.createSession);
+  app.post('/api/sessions/addSession', sessionController.addSession);
+  app.post('/api/sessions/addUser', sessionController.addUser);
+  app.post('/api/sessions/deleteSession', sessionController.deleteSession);
+  app.post('/api/sessions/removeUser', sessionController.removeUser);
+  app.post('/api/sessions/sessionSearch', sessionController.sessionSearch);
+
 }
 
 // // Get a board by id
