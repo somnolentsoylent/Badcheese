@@ -1,3 +1,4 @@
+"use strict";
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/userModels/index.js');
 
@@ -6,12 +7,18 @@ module.exports = function(passport) {
     usernameField: 'email',
     passwordField: 'password'
   }, function(username, password, done) {
+      let loggedInUser;
       User.checkEmail(username)
           .then(user => {
-            return user.checkPassword(password)
+            loggedInUser = user;
+            return user.comparePasswords(password);
           })
           .then(isMatch => {
-            done(null, user);
+            if(isMatch){
+              done(null, loggedInUser);
+            } else {
+              done(null, false, {message: 'Incorrect password'});
+            }
           })
           .catch(err => {
             done(err);
