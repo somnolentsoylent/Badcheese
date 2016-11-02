@@ -27,10 +27,14 @@ html, body {
 
 h1 {
   font-size: 3.5em;
+  margin: 0;
   font-family: 'Permanent Marker', cursive;
   /*color: white;*/
 }
 
+.no-overflow {
+  overflow: hidden;
+}
 
 
 canvas {
@@ -192,5 +196,3 @@ h5 {
   bottom: 0;
   right: 0;
 }
-
-

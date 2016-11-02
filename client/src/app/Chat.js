@@ -8,7 +8,7 @@ const chat = {
     }
 
 const chatText = {
-	width: window.document.body.offsetWidth * .30 - 3
+	width: chat.width - 5
 }
 
 const enter = {
