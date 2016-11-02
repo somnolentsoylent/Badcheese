@@ -6,7 +6,7 @@ var SessionSchema = new Schema({
   id: Schema.Types.ObjectId,
   invitedUsers: [
     {
-      User: {type: Schema.Types.ObjectId}, //, ref: 'User'},
+      User: {type: Number}, //Schema.Types.ObjectId}, //, ref: 'User'},
      Permission: String
     }
   ],
