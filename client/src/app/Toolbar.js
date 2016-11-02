@@ -4,17 +4,17 @@ import React from 'react';
 var ToolBar = ({ draw }) => (
   <div>
     <div className="well">
-      <h5>Fill Style</h5>
+      <h5>Shape Fill Style</h5>
       <div>
-        <div className='button-group'>
+        <div className='select-group'>
           <div className="tools"
-            onClick={() => draw.toggleStrokeFill('stroke')}>Stroke</div>
+            onClick={() => draw.toggleStrokeFill('stroke')}>Transparent</div>
           <div className="tools"
-            onClick={() => draw.toggleStrokeFill('fill')}>Filled</div>
+            onClick={() => draw.toggleStrokeFill('fill')}>Fill</div>
         </div>
         <br/>
         <h5>Shape</h5>
-        <div className='div-group'>
+        <div className='select-group'>
           <div className="tools"
             onClick={() => draw.enableIsSelecting()}>Drag</div>
           <div className="tools"

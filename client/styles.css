@@ -31,6 +31,8 @@ h1 {
   /*color: white;*/
 }
 
+
+
 canvas {
   background-color: aliceblue;
 }
@@ -109,19 +111,19 @@ canvas {
   margin-left: 10%
 }
 
-.drawmie-title {
-  font-family: 'Permanent Marker', cursive;
-}
 
 .nav {
   height: 50px;
   background: #6c9ddd;
   -moz-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
   -webkit-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
+  z-index: 5;
+  position: relative;
   box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
 }
 
 .title {
+  font-family: 'Permanent Marker', cursive;
   margin-top:0px;
   margin-left:20px;
   margin-bottom:0px;
@@ -155,6 +157,10 @@ h5 {
   margin-top:0px;
 }
 
+.select-group {
+  text-align: center;
+}
+
 .div-group div{
   display: block;
   margin-right:auto;
@@ -163,3 +169,28 @@ h5 {
   width:40px;
   box-shadow:none;
 }
+
+.chat-input {
+  position:absolute;
+  bottom: 0;
+}
+
+.chat-input textarea {
+  box-shadow: 2px -2px 3px 0px rgba(0, 0, 0, 0.16);
+  border:none;
+  resize: none;
+  outline: none;
+  font-size: 14px;
+  line-height: 30px;
+}
+
+.enter-button {
+  position: absolute;
+  text-align: center;
+  background: white;
+  box-shadow: .5px -2px 3px 0px rgba(0, 0, 0, 0.16);
+  bottom: 0;
+  right: 0;
+}
+
+
