@@ -33,12 +33,6 @@ h1 {
 
 canvas {
   background-color: aliceblue;
-  border: 1px solid black;
-}
-
-a{
-  margin: 200px;
-  color: #681f03;
 }
 
 .mid-grid {
@@ -49,25 +43,25 @@ a{
   color:white;
 }
 
-.button-black {
+.div-black {
     color: #fff;
     background-color: black;
     border-color: black;
 }
 
-.button-blue {
+.div-blue {
     color: #fff;
     background-color: blue;
     border-color: blue;
 }
 
-.button-yellow {
+.div-yellow {
     color: black;
     background-color: yellow;
     border-color: yellow;
 }
 
-.button-white {
+.div-white {
     color: black;
     background-color: white;
     border-color: white;
@@ -79,35 +73,93 @@ a{
   margin: 0 auto;
 }
 
-.button-alice {
+.div-alice {
   color: black;
   background-color: aliceblue;
   border-color: aliceblue;
 }
 
-.button-purple {
+.div-purple {
     color: #fff;
     background-color: purple;
     border-color: purple;
+}
+
+.div-red {
+    color: red;
+    background-color: red;
+    border-color: red;
+}
+
+.div-green {
+    background-color: green;
+    border-color: green;
 }
 
 .drawmie-input {
   text-align: center;
 }
 
-.btn-toolbar>.btn, .btn-toolbar>.btn-group, .btn-toolbar>.input-group {
-  margin-left: 105px !important;
-}
-
 .drawmie-join {
   margin-top: 25%;
 }
 
-.drawmie-button {
+.drawmie-div {
   margin-top: 10%;
   margin-left: 10%
 }
 
 .drawmie-title {
   font-family: 'Permanent Marker', cursive;
+}
+
+.nav {
+  height: 50px;
+  background: #6c9ddd;
+  -moz-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
+  -webkit-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
+}
+
+.title {
+  margin-top:0px;
+  margin-left:20px;
+  margin-bottom:0px;
+  display: block;
+  float: left;
+  position: relative;
+  background: inherit;
+  line-height: 50px;
+}
+
+.nav-items {
+    padding:0px !important;
+    margin-right:20px;
+    font-size:20px;
+    display: block;
+    height:50px;
+    list-style-type: none;
+    float: right;
+    position: relative;
+    line-height:50px;
+}
+.well {
+  background: white;
+}
+
+h5 {
+  font-size:20px;
+  margin-bottom:0px;
+  padding-bottom:0px;
+  text-align: center;
+  margin-top:0px;
+}
+
+.div-group div{
+  display: block;
+  margin-right:auto;
+  margin-left:auto;
+  height: 30px;
+  width:40px;
+  box-shadow:none;
 }
