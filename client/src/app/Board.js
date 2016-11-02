@@ -5,6 +5,67 @@ import initDrawer from '../../drawer.js';
 import Video from './Video';
 import Chat from './Chat';
 
+    const container = {
+      display: 'block',
+      float: 'left',
+      position: 'relative',
+      zIndex: 0
+    };
+    const tools = {
+      listStyleType: 'none',
+      backgroundColor: 'white',
+      position: 'relative',
+      marginTop: '0px',
+      float: 'left',
+      width: window.document.body.offsetWidth * .10,
+      height: window.document.body.offsetHeight * .92 - 50,
+      zIndex: 2,
+      boxShadow: '2px 2px 3px 0px rgba(0, 0, 0, 0.16)'
+    };
+    const boardStyle  = {
+      float: 'left',
+      position: 'relative',
+      zIndex: 2
+    }
+    const comm = {
+      float: 'left',
+      position: 'relative',
+      zIndex: 2,
+      boxShadow: '-2px 0 3px 0px rgba(0, 0, 0, 0.16)'
+    }
+    const video = {
+      background:'black',
+      width: window.document.body.offsetWidth * .30,
+      height: window.document.body.offsetHeight * .45,
+    }
+    const chat = {
+      width: window.document.body.offsetWidth * .30,
+      height: window.document.body.offsetHeight * .55 - 50,
+      backgroundColor: 'white'
+    }
+    const topBar = {
+      height: window.document.body.offsetHeight * .08,
+      width: window.document.body.offsetWidth * .70,
+      background: 'white',
+      position:'relative',
+      zIndex: 1,
+      boxShadow: '0 2px 3px 0px rgba(0, 0, 0, 0.16)'
+    }
+
+    const save = {
+      width: tools.width,
+      height: topBar.height,
+      position: 'relative',
+      float: 'left'
+    }
+
+    const drawTitle = {
+      textAlign: 'center',
+      paddingTop: '12px',
+      fontSize: '24px'
+    }
+
+
 class Board extends React.Component {
   constructor(props) {
     super(props);
@@ -118,46 +179,21 @@ class Board extends React.Component {
     ctx.clearRect(0, 0, 750, 1000);
   }
   render() {
-    const container = {
-      display: 'block',
-      float: 'left'
-    };
-    const tools = {
-      listStyleType: 'none',
-      backgroundColor: 'white',
-      marginTop: '0px',
-      float: 'left',
-      width: window.document.body.offsetWidth * .10,
-      height: window.document.body.offsetHeight * .90 - 50
-    };
-    const comm = {
-      float: 'left'
-    }
-    const video = {
-      background:'black',
-      width: window.document.body.offsetWidth * .30,
-      height: window.document.body.offsetHeight * .45,
-    }
-    const chat = {
-      width: window.document.body.offsetWidth * .30,
-      height: window.document.body.offsetHeight * .45 - 50,
-      backgroundColor: 'white'
-    }
-    const topBar = {
-      height: window.document.body.offsetHeight * .10,
-      background: 'white'
-    }
 
     return (
         <div>
-          {/* window hash determines what room the user is in. Here that room gets displayed on the page */}
-          <div style={topBar}>Drawmie {window.location.hash}</div>
-          {/* this tag takes you back to the landing page */}
-          <div className="container-fluid" style={tools}>
-            <ToolBar draw={ this.state.draw } />
-          </div>
-          <div className="container-fluid" style={container} >
-            <canvas id="draw-canvas" ref="canvas" width={window.document.body.offsetWidth * .60} height={window.document.body.offsetHeight * .90 - 50} />
+          <div style={boardStyle}>
+            <div style={topBar}>
+                <div style={save}></div> 
+                <div style={drawTitle}> Drawmie {window.location.hash}</div>
+            </div>
+            {/* this tag takes you back to the landing page */}
+            <div className="container-fluid" style={tools}>
+              <ToolBar draw={ this.state.draw } />
+            </div>
+            <div className="container-fluid" style={container} >
+              <canvas id="draw-canvas" ref="canvas" width={window.document.body.offsetWidth * .60} height={window.document.body.offsetHeight * .92 - 50} />
+            </div>
           </div>
           <div style={comm}>
             <Video style={video}/>
