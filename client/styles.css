@@ -131,6 +131,7 @@ canvas {
   margin-top:0px;
   margin-left:20px;
   margin-bottom:0px;
+  font-size: 20px;
   display: block;
   float: left;
   position: relative;
@@ -195,4 +196,84 @@ h5 {
   box-shadow: .5px -2px 3px 0px rgba(0, 0, 0, 0.16);
   bottom: 0;
   right: 0;
+}
+
+.auth-choices div {
+  cursor: pointer;
+}
+
+.auth-title {
+  text-align: center;
+  font-size:70px;
+  text-shadow: 3.3px 3.3px #000;
+  color: white;
+}
+
+.auth-desc {
+  text-align: center;
+  margin-top:0px;
+  margin-bottom: 50px;
+  text-shadow: 1px 1px #000;
+  color:white;
+}
+
+.auth-container {
+  box-sizing: border-box;
+  width:30%;
+  margin-right:auto;
+  margin-left:auto;
+}
+
+.login input {
+  display: block;
+  width:80%;
+  background: none;
+  margin-right:auto;
+  margin-left: auto;
+  border: none;
+  border-bottom: 1px solid white;
+  height: 30px;
+  line-height: 30px;
+  font-size: 18px;
+  color:white;
+  outline:none;
+  margin-top: 5px;
+}
+
+.login button{
+  margin-top: 10px;
+  width: 80%;
+  margin-right: auto;
+  margin-left: 10%;
+  height:50px;
+  font-size: 20px;
+  border:none;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.4);
+  background: rgba(0,0,0,0.3);
+}
+
+.login ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: white;
+}
+
+.auth-choices {
+  margin-top: 20px;
+  width:80%;
+  height:50px;
+  margin-left:10%;
+  border:none;
+  background: none;
+}
+
+.auth-choices button {
+  background: rgba(0,0,0,0.4);
+  color:white;
+  border:none;
+  text-align: center;
+  box-sizing: border-box;
+  border: 1px solid rgba(255,255,255,0.4);
+  height:40px;
+  font-size: 16px;
+  width: 50%;
 }
