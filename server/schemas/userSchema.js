@@ -1,3 +1,4 @@
+'use strict';
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt-nodejs');
@@ -24,9 +25,8 @@ const UserSchema = new Schema({
     required: true
   },
   salt: String,
-  photo: String,
-  sessions: [Schema.ObjectId],
-
+  photo: {type: String, default: 'https://s-media-cache-ak0.pinimg.com/236x/82/49/f2/8249f21c72876f28d1ac44cdb2023eb6.jpg'},
+  sessions: {type: [Schema.Types.ObjectId], ref: 'Session' }
 });
 
 UserSchema.methods.comparePasswords = function (candidatePassword) {

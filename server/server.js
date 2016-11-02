@@ -7,6 +7,7 @@ const util = require('./helpers/utils');
 var mongoose = require('mongoose');
 var bluebird = require('bluebird');
 mongoose.Promise = bluebird;
+const passport = require('passport');
 
 
 const port = 3000;
@@ -17,6 +18,9 @@ mongoose.connection.on('error', console.error.bind(console, 'connection error:')
 mongoose.connection.on('connected', function callback () {
   console.log('Mongoose connection open on mongodb://localhost/drawmie!');
 });
+
+//configure passport
+require('./authentication/init.js')(passport);
 
 require('./middleware.js')(app, express);
 
@@ -31,7 +35,7 @@ server.listen(port, () => {
 io.on('connection', (socket) => {
   socket.on('addMeToRoom', (id) => {
     const liveBoard = util.doGetBoard(id);
-    if (liveBoard) {  
+    if (liveBoard) {
       socket.join(id);
       io.to(id).emit('renderme', liveBoard.board);
       socket.on('clientDrawing', (data) => {
