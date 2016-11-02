@@ -1,10 +1,19 @@
 var sessionController = require('./controllers/sessionController');
-// var userController = require('./controllers/userController');
+var userController = require('./controllers/userController');
 const handler = require('./helpers/request-handler.js');
+const passport = require('passport');
 
 module.exports = function(app, express){
   // Create a new board
   app.get('/board', handler.getNewBoard);
+  app.get('/api/users/auth', userController.isAuthorized);
+  app.post('/api/users/login', passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+    })
+  );
+  app.post('/api/users/signup', userController.signup);
 
   //session actions
   app.post('/api/sessions/addSession', sessionController.addSession);
@@ -19,4 +28,4 @@ module.exports = function(app, express){
 // app.get('/board/:boardId', handler.getBoard);
 //
 // // Archive board by id (Server to Server)
-// app.post('board/:archiveId', handler.archiveBoard); 
+// app.post('board/:archiveId', handler.archiveBoard);
