@@ -4,8 +4,8 @@ const Board = require('../../schemas/boardSchema.js');
 const Session = require('../../schemas/sessionSchema.js');
 
 module.exports = (board, sessionId) => {
-  var board = new Board(board);
-  return board.save()
+  var newBoard = new Board(board);
+  return newBoard.save()
   .then( board => {
   	return Session.findOneAndUpdate({_id: sessionId}, {
   		$push: {

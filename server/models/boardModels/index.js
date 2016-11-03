@@ -1,6 +1,6 @@
 // index.js
 module.exports = {
-	addBoardtoSession: require('./addBoardtoSession'),
+	addBoardToSession: require('./addBoardToSession'),
 	addBoardToUser: require('./addBoardToUser'),
 	deleteBoardFromUser: require('./deleteBoardFromUser'),
 	getSessionBoards: require('./getSessionBoards'),

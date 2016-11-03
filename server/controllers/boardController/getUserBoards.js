@@ -1,5 +1,5 @@
 // getUserBoards.js
-
+var boardModels = require('../../models/boardModels');
 
 module.exports = (req, res) => {
   var userId = req.body.userId;
