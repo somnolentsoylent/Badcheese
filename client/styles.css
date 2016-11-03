@@ -282,6 +282,11 @@ h5 {
   width: 50%;
 }
 
+.profile-pic {
+  width: 200px;
+  height: 200px;
+  display: block;
+}
 .videos {
   position: absolute;
   bottom:0;

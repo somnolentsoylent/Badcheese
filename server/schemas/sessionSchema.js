@@ -15,7 +15,7 @@ var SessionSchema = new Schema({
   },
   host: { 
     type: Schema.Types.ObjectId, 
-    ref: 'User',
+    ref: 'User'
     // required: true
   },
   private: {

@@ -13,13 +13,6 @@ module.exports = (req, res) => {
   var userId = req.body.userId; 
   var permission = req.body.permission;
 
-  // console.log('UID', userId)
-  // console.log('seshID', sessionId)
-  // console.log('UID', permission)
-
-  // console.log('REQ:', req.body)
-  // console.log('-----', sessionId)
-
   sessionModels.addUser(sessionId, userId, permission)
   .then((success) => {
     res.sendStatus(201);
