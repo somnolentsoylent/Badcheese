@@ -122,7 +122,7 @@ describe('Session Models', function(){
   });
 
   describe('Add User', function(){
-    it('should add a new user to the invited list', function(done){
+    it("should add a new user to the invited list as well as a session to the User's list of sessions", function(done){
       User.create({
         firstName: 'testGuy2222',
         lastName: 'testLast2222',
@@ -131,87 +131,77 @@ describe('Session Models', function(){
       })
       .then(function(user){
         tUser2 = user;
-        sessionModels.addUser(testSessionId, tUser2._id, 'writeOnly');
+        return sessionModels.addUser(testSessionId, tUser2._id, 'writeOnly')
+      })
+      .then(function(result){
+        return Session.findOne({name: 'Test Session'}).exec()
+      })
+      .then(function(session){
+        // console.log(session.invitedUsers)
+        expect(session.invitedUsers.length).to.equal(2);
+        expect(session.invitedUsers[0].User.toString()).to.equal(tUser._id.toString());
+        expect(session.invitedUsers[0].Permission).to.equal('readOnly');
+      })
+      .then(function(result){
+        return User.findOne({firstName: 'testGuy'}).exec()
+      })
+      .then(function(user){
+        // console.log(session.invitedUsers)
+        expect(user.sessions.length).to.equal(1);
+        expect(user.sessions[0].toString()).to.equal(testSessionId.toString());
         done();
-      });
-// sessionModels.addUser(testSessionId, tUser._id, 'readOnly')
-      // .then(function(result){
-      //   return Session.findOne({name: 'Test Session'}).exec()
-      // })
-      // .then(function(session){
-      //   // console.log(session.invitedUsers)
-      //   expect(session.invitedUsers.length).to.equal(1);
-      //   expect(session.invitedUsers[0].User).to.equal(tUser._id);
-      //   expect(session.invitedUsers[0].Permission).to.equal('readOnly');
-      //   done();
-      // })
-      // .catch(function(err){
-      //   console.log(err);
-      //   done();
-      // });
+      })
     });
-    // it('should add a new user to the invited list', function(done){
-    //   // console.log('---------', testSession._id)
-    //   sessionModels.addUser(testSessionId, tUser2._id, 'writeOnly')
-    //   .then(function(result){
-    //     return Session.findOne({name: 'Test Session'}).exec()
-    //   })
-    //   .then(function(session){
-    //     // console.log(session.invitedUsers)
-    //     expect(session.invitedUsers.length).to.equal(2);
-    //     expect(session.invitedUsers[1].User).to.equal(tUser2._id);
-    //     expect(session.invitedUsers[1].Permission).to.equal('writeOnly');
-    //     done();
-    //   })
-    //   .catch(function(err){
-    //     console.log(err);
-    //     done();
-    //   });
-    // });
   });
 
-  // describe('Remove User', function(){
-  //   it('should remove a user from the invited list', function(done){
-  //     sessionModels.addUser(testSessionId, tUser3, 'writeOnly')
-  //     .then(function(result){
-  //       sessionModels.removeUser(testSessionId, tUser._id)
-  //       .then(function(result){
-  //         return Session.findOne({name: 'Test Session'}).exec()
-  //       })
-  //       .then(function(session){
-  //         expect(session.invitedUsers.length).to.equal(2);
-  //         expect(session.invitedUsers[0].User).to.equal(tUser2._id);
-  //         expect(session.invitedUsers[0].Permission).to.equal('writeOnly');
+  describe('Remove User', function(){
+    it('should remove a user from the invited list', function(done){
+      User.create({
+        firstName: 'testGuy3333',
+        lastName: 'testLast3333',
+        password: 'testPass3333',
+        email: 'test3333@test.com'
+      })
+      .then(function(user){
+        tUser3 = user;
+        return sessionModels.addUser(testSessionId, tUser3._id, 'readAndWrite')
+      })
+      .then(function(result){
+        return sessionModels.removeUser(testSessionId, tUser._id)
+      })
+      .then(function(result){
+        return Session.findOne({name: 'Test Session'}).exec()
+      })
+      .then(function(session){
+        expect(session.invitedUsers.length).to.equal(2);
+        expect(session.invitedUsers[0].User.toString()).to.equal(tUser2._id.toString());
+        expect(session.invitedUsers[0].Permission).to.equal('writeOnly');
 
-  //         done();
-  //       })
-  //     })
-  //     .catch(function(err){
-  //       console.log(err);
-  //       done();
-  //     });
-  //   });
+        done();
+      })
+      .catch(function(err){
+        console.log(err);
+        done();
+      });
+    });
 
-  // });
+  });
 
-  // describe('Delete Session', function(){
-  //   it('should delete a session from the database', function(done){
-  //     sessionModels.addSession(testSession1)
-  //     .then(function(result){
-  //       sessionModels.deleteSession(testSessionId)
-  //       .then(function(result){
-  //         return Session.find({}).exec()
-  //       })
-  //       .then(function(sessions){
-  //         expect(sessions.length).to.equal(1);
-  //         expect(sessions[0].name).to.equal('Test Session1');
-  //         done();
-  //         })
-  //       })
-  //       .catch(function(err){
-  //         console.log(err);
-  //         done();
-  //       });
-  //     })
-  //   });
+  describe('Delete Session', function(){
+    it('should delete a session from the database', function(done){
+      sessionModels.deleteSession(testSessionId)
+      .then(function(result){
+        return Session.find({}).exec()
+      })
+      .then(function(sessions){
+        expect(sessions.length).to.equal(0);
+        // expect(sessions[0].name).to.equal('Test Session1');
+        done();
+        })
+      .catch(function(err){
+        console.log(err);
+        done();
+      });
+    })
+  })
 });
