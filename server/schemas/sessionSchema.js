@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var SessionSchema = new Schema({
   invitedUsers: [
     {
-      User: Number, //{type: Schema.Types.ObjectId, ref: 'User'},
+      User: {type: Schema.Types.ObjectId, ref: 'User'},
      Permission: String
     }
   ],
