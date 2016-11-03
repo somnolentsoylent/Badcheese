@@ -8,10 +8,10 @@ export default class App extends React.Component {
     this.state = {user: null}
   }
   login(user) {
-    this.setState({user: user});
-    console.log(user);
     var user = user || {email: 'null'};
     window.localStorage.setItem('user', user.email);
+    this.setState({user: user});
+    console.log(user);
   }
   componentDidMount() {
     this.checkAuth()

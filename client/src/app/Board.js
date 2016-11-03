@@ -4,6 +4,10 @@ import Render from '../../render.js';
 import initDrawer from '../../drawer.js';
 import Video from './Video';
 import Chat from './Chat';
+  
+  var peer;
+  var socket; 
+
 
     const container = {
       display: 'block',
@@ -57,15 +61,58 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      draw: null
+      draw: null,
+      localStream: null,
+      streams: []
     };
   }
   // when component mounts board gets created and drawer gets initiated and set to state
   componentDidMount() {
     this.updateCanvas();
     const currentRoom = window.location.hash.slice(2);
-    const socket = io();
+    //Socket Rooms
+    socket = io();
     socket.emit('addMeToRoom', currentRoom);
+    // Add peer video connection
+    peer = new Peer(this.props.user._id, {key: 'r2jzzf71zn9izfr'});
+    peer.on('open', function(id) {
+      socket.emit('peerId', id);
+    });
+
+    var context = this;
+
+    //Call into the stream
+    socket.on('peers', peers => {
+      let you = peers.indexOf(this.props.user._id)
+      if (you !== -1) {
+       peers.splice(you, 1); 
+      }
+      console.log(peers);
+      this.setState({peers: peers})
+      for (var i = 0; i < peers.length; i++) {
+        let thisCall = peer.call(peers[i], this.state.localStream)
+        thisCall.on('stream', theirStream => {
+          console.log('Their stream ', theirStream);
+          let streams = context.state.streams;
+          streams.push(URL.createObjectURL(theirStream))
+          context.setState({streams: streams});
+        })
+      }
+    })
+
+    //Receive any stream data
+    peer.on('call', incomingCall => {
+      incomingCall.answer(this.state.localStream);
+      incomingCall.on('stream', function (theirStream) {
+        console.log('Their stream ', theirStream);
+        let streams = context.state.streams;
+        streams.push(URL.createObjectURL(theirStream))
+        context.setState({streams: streams})
+      });
+    });
+
+
+    //Draw and render
     const drawer = initDrawer();
     this.setState({ draw: drawer });
     const render = Render('draw-canvas', drawer);
@@ -121,7 +168,7 @@ class Board extends React.Component {
         }
       }
     };
-
+    //Tick to send drawer data (I think?)
     var tick = function tick() {
       var shapes = {};
 
@@ -137,7 +184,7 @@ class Board extends React.Component {
 
         drawer.data.updates = [];
       }
-
+      //defaults 
       var myDraw = {
         color: 'aliceBlue',
         newShapes: drawer.data.newShapes,
@@ -158,12 +205,17 @@ class Board extends React.Component {
 
     setInterval(tick, 100);
     window.requestAnimationFrame(render);
-
+  
   }
+
   
   updateCanvas() {
     const ctx = this.refs.canvas.getContext('2d');
     ctx.clearRect(0, 0, 750, 1000);
+  }
+
+  setLocalStream(stream) {
+    this.setState({localStream: stream});
   }
   render() {
 
@@ -182,7 +234,7 @@ class Board extends React.Component {
             </div>
           </div>
           <div style={comm}>
-            <Video/>
+            <Video streams={this.state.streams} setStream={this.setLocalStream.bind(this)}/>
             <Chat/>
           </div>
         </div>

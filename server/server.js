@@ -1,3 +1,4 @@
+'use strict';
 const express = require('express');
 const app = require('express')();
 const server = require('http').Server(app);
@@ -21,6 +22,9 @@ if (!process.argv[2]) {
   });
 }
 
+let peers = {};
+
+
 //configure passport
 require('./authentication/init.js')(passport);
 
@@ -40,6 +44,20 @@ io.on('connection', (socket) => {
     if (liveBoard) {
       socket.join(id);
       io.to(id).emit('renderme', liveBoard.board);
+      socket.on('peerId', peerId => {
+        peers[id] = peers[id] || [];
+        peers[id].push(peerId);
+        console.log(peers[id])
+        socket.emit('peers', peers[id]);
+      })
+      socket.on('newStreamer', peerId => {
+        let i = peers[id].indexOf(peerId);
+        if (i != -1) {
+          peers[id].splice(i, 1);
+          peers[id].unshift(peerId);
+        }
+        io.to(id).emit(peers[id]);
+      });
       socket.on('clientDrawing', (data) => {
         liveBoard.loadChange(data, function(changes) {
           io.to(id).emit('renderme', changes);
