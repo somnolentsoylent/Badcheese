@@ -21,7 +21,8 @@ var SessionSchema = new Schema({
   private: {
     type: Boolean,
     required: true
-  }
+  },
+  boards: [{type: [Schema.Types.ObjectId], ref: 'Board' }]
 });
 
 module.exports = mongoose.model('Session', SessionSchema);

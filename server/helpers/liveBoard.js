@@ -1,10 +1,12 @@
-const LiveBoard = () => {
-  return {
-    board: {
+const LiveBoard = (shapes) => {
+  var shapes = shapes || {}; 
+  var board = {
       color: 'white',
-      shapes: {},
+      shapes: shapes,
       next: 0
-    },
+    }
+  return {
+    board: board,
 
     loadChange: function loadChange(change, emit) {
       var emitChange = {
