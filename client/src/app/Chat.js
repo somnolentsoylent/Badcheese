@@ -11,6 +11,15 @@ const chatText = {
 	width: chat.width - 5
 }
 
+const chatWindow = {
+  height: window.document.body.offsetHeight * .55 - 75,
+  overflowY: 'scroll',
+}
+
+const chatMessage = {
+  color: 'grey',
+}
+
 const enter = {
 	width: window.document.body.offsetWidth * .06
 }
@@ -24,10 +33,11 @@ export default class Chat extends React.Component {
     }
   }
   componentDidMount() {
-  	const socket = this.props.socket;
+
   }
-  sendMessage() {
-  	this.setState({message: ''});
+  sendMessage(newMessage) {
+    this.props.onMessageSend(newMessage);
+    this.setState({message: ''});
   }
   resizeTextArea(e) {
   	const rows = Math.floor(this.state.message.length / 60) + 1;
@@ -40,17 +50,26 @@ export default class Chat extends React.Component {
 
   onEnter(e) {
   	if (e.charCode === 13) {
-  		this.sendMessage();
+  		this.sendMessage(this.state.message);
   		this.setState({rows: 1})
   		e.preventDefault();
   	}
-  }  
-  /*TODO add chat message rendering */
+  }
+
   render() {
     return <div style={chat}>
+      <div style={chatWindow}>
+      {this.props.messages.map((message, index) => {
+        return (
+          <div style={chatMessage} key={index} >
+            <h3>{message}</h3>
+          </div>
+        )
+      })}
+      </div>
     	<form className='chat-input'>
     		<textarea onKeyPress={e => this.onEnter(e)} onChange={e => this.resizeTextArea(e)} style={chatText} rows={this.state.rows} value={this.state.message} placeholder='Type a message...' required/>
-    	</form>  	
+    	</form>
     </div>
   }
 }
