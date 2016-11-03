@@ -24,6 +24,7 @@ if (!process.argv[2]) {
 
 let peers = {};
 
+
 //configure passport
 require('./authentication/init.js')(passport);
 
@@ -36,8 +37,6 @@ require('./routes.js')(app, express);
 server.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
-
-const messages = [];
 
 io.on('connection', (socket) => {
   socket.on('addMeToRoom', (id) => {
@@ -58,11 +57,6 @@ io.on('connection', (socket) => {
           peers[id].unshift(peerId);
         }
         io.to(id).emit(peers[id]);
-
-      socket.on('sendMessage', message => {
-        console.log('new message', message);
-        messages.push(message);
-        io.to(id).emit('fetchMessages', messages)
       });
       socket.on('clientDrawing', (data) => {
         liveBoard.loadChange(data, function(changes) {
