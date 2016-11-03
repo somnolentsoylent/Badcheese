@@ -6,7 +6,7 @@ export default class Landing extends React.Component {
     super(props)
 
     this.state = { 
-      showBoardForm: false;
+      showBoardForm: false
     }
   }
 
@@ -22,24 +22,42 @@ export default class Landing extends React.Component {
   render() {
     console.log('Props:', this.props.user)
     return (
-      <div>
+      <div className='landing-page'>
         
-        <div className='profile-section'>
-          <img className='profile-pic' src={this.props.user.photo}></img>
-          <p>{this.props.user.firstName} {this.props.user.lastName}</p>
+        <div className='profile-container'>
+          <div className='profile-section'>
+            <img className='profile-pic' src={this.props.user.photo}></img>
+            <p>{this.props.user.firstName} {this.props.user.lastName}</p>
+          </div>
         </div>
 
-        <div className='right-section'>
-          <div className='build-new-board'>
-            CREATE NEW BOARD
+        <div className='rightside-container'>
+          
+          <div className='right-section'>
+            
+            {this.state.showBoardForm ? 
+              <div className='build-new-board'>
+                CREATE NEW Rooms
+                <form>
+                  <input type='text' placeholder='Enter Room Name...'/>
+                  <input type="radio" name="viewablity" value="private">Private</input>
+                  <input type='radio' name='viewablity' value='public'>Public</input><br />
+                  <input className='search-user' type='text' placeholder='Search for user email...'/>
+                  <input type='radio' name='permission' value='read'>Read</input><br />
+                  <input type='radio' name='permission' value='write'>Write</input><br />
+                  <button className='search-user'>Add User</button>
+                  <button onClick={e => this.newBoard()}>Create Board</button>
+                </form>
+              </div> 
+              : <div></div>}
+
+            {!this.state.showBoardForm ? 
+              <div className='my-sessions'>
+                <button onClick={e => this.setState({showBoardForm: true}) }>Create New Room</button>
+              </div> 
+              : <div></div>}
           </div>
 
-          <div className='my-sessions'>
-            <div className='session-builder'>
-              <button onClick={e => this.newBoard()}>New Board</button>
-            </div>
-              My Sessions
-          </div>
         </div>
 
       </div>
