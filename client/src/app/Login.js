@@ -20,6 +20,8 @@ export default class Login extends React.Component {
       return response.json()
     })
     .then( user => {
+      var user = user || {email: 'null'};
+      window.localStorage.setItem('user', user.email);
       this.props.login(user);
     })
     .catch( err => {

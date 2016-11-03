@@ -4,6 +4,7 @@ import React from 'react';
   const video = {
       background:'black',
       color: 'white',
+      position: 'relative',
   	  width: window.document.body.offsetWidth * .30,
       height: window.document.body.offsetHeight * .45
     }
@@ -12,7 +13,8 @@ import React from 'react';
   	maxWidth: '100%',
   	width: video.width,
   	height: video.height,
-  	maxHeight: '100%'
+  	maxHeight: '100%',
+    zIndex: 3
   }
 
 let localStream;
@@ -51,6 +53,7 @@ export default class Video extends React.Component {
 
   setStream(stream) {
     localStream = stream;
+    this.renderVideo(stream);
     this.props.setStream(stream)
   }
 
@@ -97,8 +100,16 @@ export default class Video extends React.Component {
   	this.setState({src: localStream})
   }
   getVideos() {
-    if (this.state.streams.length === 0 ) {
-      return;
+    if (this.props.streams.length < 2 ) {
+      return (<div className='videos'>
+                <video className='mini' src={localStream} autoPlay muted></video>
+              </div>)
+    } else {
+        return     ( <div className='videos'>
+                <video className='mini' src={localStream} autoPlay muted></video>
+                {this.props.streams.filter((stream, index) => (index && index < 3)).map( (stream, index) => {
+                   return <video className='mini'src={stream} autoPlay></video>})}
+              </div>)
     }
   }
   render() {

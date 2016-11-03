@@ -213,6 +213,7 @@ class Board extends React.Component {
     const ctx = this.refs.canvas.getContext('2d');
     ctx.clearRect(0, 0, 750, 1000);
   }
+
   setLocalStream(stream) {
     this.setState({localStream: stream});
   }
