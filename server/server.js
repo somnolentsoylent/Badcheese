@@ -23,6 +23,7 @@ if (!process.argv[2]) {
 }
 
 let peers = {};
+let chatRooms = {};
 
 
 //configure passport
@@ -57,6 +58,11 @@ io.on('connection', (socket) => {
           peers[id].unshift(peerId);
         }
         io.to(id).emit(peers[id]);
+      });
+      socket.on('sendMessage', message => {
+        chatRooms[id] = chatRooms[id] || []
+        chatRooms[id].push(message);
+        io.to(id).emit('fetchMessages', chatRooms[id])
       });
       socket.on('clientDrawing', (data) => {
         liveBoard.loadChange(data, function(changes) {
