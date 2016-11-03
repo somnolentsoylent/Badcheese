@@ -5,6 +5,7 @@ export default class Landing extends React.Component {
   constructor(props) {
     super(props)
   }
+
   newBoard() {
     fetch('http://localhost:3000/board')
     .then(response => response.json())
