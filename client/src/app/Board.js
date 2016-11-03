@@ -4,9 +4,9 @@ import Render from '../../render.js';
 import initDrawer from '../../drawer.js';
 import Video from './Video';
 import Chat from './Chat';
-  
+
   var peer;
-  var socket; 
+  var socket;
 
 
     const container = {
@@ -63,7 +63,8 @@ class Board extends React.Component {
     this.state = {
       draw: null,
       localStream: null,
-      streams: []
+      streams: [],
+      chatMessages: []
     };
   }
   // when component mounts board gets created and drawer gets initiated and set to state
@@ -74,18 +75,27 @@ class Board extends React.Component {
     socket = io();
     socket.emit('addMeToRoom', currentRoom);
     // Add peer video connection
-    peer = new Peer(this.props.user._id, {key: 'r2jzzf71zn9izfr'});
+    peer = new Peer(this.props.user._id, {
+      key: 'r2jzzf71zn9izfr',
+      config: {'iceServers': [
+        { url: 'stun:stun.l.google.com:19302' },
+        { url: 'stun:stun1.l.google.com:19302' }]
+      }
+    });
     peer.on('open', function(id) {
       socket.emit('peerId', id);
     });
 
     var context = this;
 
+    socket.on('fetchMessages', messages => {
+      this.setState({chatMessages: messages});
+    })
     //Call into the stream
     socket.on('peers', peers => {
       let you = peers.indexOf(this.props.user._id)
       if (you !== -1) {
-       peers.splice(you, 1); 
+       peers.splice(you, 1);
       }
       console.log(peers);
       this.setState({peers: peers})
@@ -176,15 +186,15 @@ class Board extends React.Component {
         shapes[drawer.data.modifiedShape.id] = drawer.data.modifiedShape;
       }
       if (drawer.data.updates) {
-        
+
         drawer.data.updates.forEach(function(update) {
           shapes[update.id] = update;
         });
-        
+
 
         drawer.data.updates = [];
       }
-      //defaults 
+      //defaults
       var myDraw = {
         color: 'aliceBlue',
         newShapes: drawer.data.newShapes,
@@ -205,10 +215,13 @@ class Board extends React.Component {
 
     setInterval(tick, 100);
     window.requestAnimationFrame(render);
-  
+
   }
 
-  
+  handleMessageSend (newMessage) {
+    socket.emit('sendMessage', newMessage);
+  }
+
   updateCanvas() {
     const ctx = this.refs.canvas.getContext('2d');
     ctx.clearRect(0, 0, 750, 1000);
@@ -235,7 +248,7 @@ class Board extends React.Component {
           </div>
           <div style={comm}>
             <Video streams={this.state.streams} setStream={this.setLocalStream.bind(this)}/>
-            <Chat/>
+            <Chat user={this.props.user} messages={this.state.chatMessages} onMessageSend={this.handleMessageSend.bind(this)}/>
           </div>
         </div>
     );

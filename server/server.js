@@ -23,6 +23,7 @@ if (!process.argv[2]) {
 }
 
 let peers = {};
+let chatRooms = {};
 
 
 //configure passport
@@ -40,6 +41,8 @@ server.listen(port, () => {
 
 io.on('connection', (socket) => {
   socket.on('addMeToRoom', (id) => {
+    chatRooms[id] = chatRooms[id] || []
+    socket.emit('fetchMessages', chatRooms[id])
     const liveBoard = util.doGetBoard(id);
     if (liveBoard) {
       socket.join(id);
@@ -57,6 +60,10 @@ io.on('connection', (socket) => {
           peers[id].unshift(peerId);
         }
         io.to(id).emit(peers[id]);
+      });
+      socket.on('sendMessage', message => {
+        chatRooms[id].unshift(message);
+        io.to(id).emit('fetchMessages', chatRooms[id])
       });
       socket.on('clientDrawing', (data) => {
         liveBoard.loadChange(data, function(changes) {
