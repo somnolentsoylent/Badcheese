@@ -41,13 +41,17 @@ export default class Video extends React.Component {
   }
 
   componentDidMount () {
-  	const socket = this.props.socket;
   	navigator.mediaDevices.getUserMedia({
   		audio: true,
   		video: true
   	})
-  	.then(stream => this.renderVideo(stream))
+  	.then(stream => this.setStream(stream))
   	.catch(e => this.setState({alert: 'The camera and microphone must be on in order to stream video'}))
+  }
+
+  setStream(stream) {
+    localStream = stream;
+    this.props.setStream(stream)
   }
 
   createPeerConnection() {
@@ -102,7 +106,7 @@ export default class Video extends React.Component {
   		return <div style={video}>{this.state.alert}</div>
   	} else {
     return <div style={video}>
-    			<video style={player} src={this.state.src} autoPlay muted></video>
+    			<video style={player} src={this.props.streams[0]} autoPlay></video>
           {this.getVideos()}
     		</div>
   	}
