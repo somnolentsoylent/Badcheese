@@ -13,11 +13,13 @@ const passport = require('passport');
 const port = 3000;
 
 //connect the database
-// mongoose.connect('mongodb://localhost/drawmie');
-// mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
-// mongoose.connection.on('connected', function callback () {
-//   console.log('Mongoose connection open on mongodb://localhost/drawmie!');
-// });
+if (!process.argv[2]) {
+  mongoose.connect('mongodb://localhost/drawmie');
+  mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
+  mongoose.connection.on('connected', function callback () {
+    console.log('Mongoose connection open on mongodb://localhost/drawmie!');
+  });
+}
 
 //configure passport
 require('./authentication/init.js')(passport);
