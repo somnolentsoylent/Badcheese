@@ -131,7 +131,9 @@ canvas {
   margin-top:0px;
   margin-left:20px;
   margin-bottom:0px;
-  font-size: 20px;
+  font-size: 30px;
+  color: white;
+  text-shadow: 1.7px 1.7px #000;
   display: block;
   float: left;
   position: relative;
@@ -247,6 +249,7 @@ h5 {
   margin-left: 10%;
   height:50px;
   font-size: 20px;
+  letter-spacing: 3px;
   border:none;
   color: white;
   border: 1px solid rgba(255,255,255,0.4);
