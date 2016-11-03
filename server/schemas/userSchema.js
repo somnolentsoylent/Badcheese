@@ -26,7 +26,8 @@ const UserSchema = new Schema({
   },
   salt: String,
   photo: {type: String, default: 'https://s-media-cache-ak0.pinimg.com/236x/82/49/f2/8249f21c72876f28d1ac44cdb2023eb6.jpg'},
-  sessions: [{type: [Schema.Types.ObjectId], ref: 'Session' }]
+  sessions: [{type: [Schema.Types.ObjectId], ref: 'Session' }],
+  boards: [{type: [Schema.Types.ObjectId], ref: 'Board' }]
 });
 
 UserSchema.methods.comparePasswords = function (candidatePassword) {

@@ -1,5 +1,6 @@
 var sessionController = require('./controllers/sessionController');
 var userController = require('./controllers/userController');
+var boardController = require('./controllers/boardController');
 const handler = require('./helpers/request-handler.js');
 const passport = require('passport');
 
@@ -18,6 +19,12 @@ module.exports = function(app, express){
   app.post('/api/sessions/deleteSession', sessionController.deleteSession);
   app.post('/api/sessions/removeUser', sessionController.removeUser);
   app.post('/api/sessions/sessionSearch', sessionController.sessionSearch);
+
+  app.post('/api/boards/addBoardToSession', boardController.addBoardToSession);
+  app.post('/api/boards/addBoardToUser', boardController.addBoardToUser);
+  app.post('/api/boards/deleteBoardFromUser', boardController.deleteBoardFromUser);
+  app.post('/api/boards/getSessionBoards', boardController.getSessionBoards);
+  app.post('/api/boards/getUserBoards', boardController.getUserBoards);
 
 }
 

@@ -1,4 +1,5 @@
-var initDrawer = function initDrawer() {
+var initDrawer = function initDrawer(permission) {
+  var permission = true;
   var data = {
     color: 'black',
     shapes: {},
@@ -217,6 +218,7 @@ var initDrawer = function initDrawer() {
     }
 
     handleMouseDown(e) {
+      if (permission) { 
       this.isDrawing = true;
       var mousePoint = this.getMousePoint(e);
 
@@ -229,6 +231,7 @@ var initDrawer = function initDrawer() {
       var points = [mousePoint];
       this.data.currentShape = new Shape(this.currentShapeType, points,
         this.strokeColor, this.fillColor);
+      }
 
       // this.shapes.push(this.currentShape);
     }
