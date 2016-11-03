@@ -4,8 +4,8 @@
   "description": "Collaborative Whiteboard App",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./specs",
-    "start": "nodemon server/server.js"
+    "test": "mocha ./specs test",
+    "start": "node server/server.js"
   },
   "repository": {
     "type": "git",
