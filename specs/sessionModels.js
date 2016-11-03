@@ -184,7 +184,7 @@ describe('Session Models', function(){
         done();
       });
     });
-
+  
   });
 
   describe('Delete Session', function(){
