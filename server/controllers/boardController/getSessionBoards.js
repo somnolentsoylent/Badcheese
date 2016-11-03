@@ -1,5 +1,7 @@
 // getSessionBoards.js
 
+var boardModels = require('../../models/boardModels');
+
 module.exports = (req, res) => {
   var sessionId = req.body.sessionId;
   boardModels.getSessionBoards(sessionId)

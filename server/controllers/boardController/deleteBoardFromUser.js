@@ -1,5 +1,7 @@
 // deleteBoardFromUser.js
 
+var boardModels = require('../../models/boardModels');
+
 module.exports = (req, res) => {
   var boardId = req.body.boardId;
   var userId = req.body.userId;
