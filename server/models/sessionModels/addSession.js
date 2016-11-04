@@ -3,6 +3,7 @@ var User = require('../../schemas/userSchema');
 //add session to the database
 module.exports = (session) => {
   var newSession = new Session(session);
+  newSession.invitedUsers.push(session.host);
   return newSession.save()
   .then( event => {
     return Promise.all(

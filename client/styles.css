@@ -298,15 +298,17 @@ h5 {
 .profile-pic {
   width: 80%;
   /*display: block;*/
+  box-shadow: 2px 2px 6px #000;
 }
 
 
 .landing-page {
-  border: 2px solid black;
+  /*border: 2px solid black;*/
+  margin-top: 20px;
 }
 
 .profile-container{
-  border: 1px solid red;
+  /*border: 1px solid red;*/
   float: left;
   box-sizing: border-box;
   width: 30%;
@@ -316,7 +318,7 @@ h5 {
 }
 
 .rightside-container{
-  border: 1px solid blue;
+  /*border: 1px solid blue;*/
 /*   margin: 10px; */
   float: left;
   box-sizing: border-box;
@@ -327,11 +329,15 @@ h5 {
 }
 .profile-section{
 /*   margin: 20px; */
- border: 1px solid red;
+ /*border: 1px solid red;*/
 
 }
 .right-section{
-  border: 1px solid blue;
+  /*border: 1px solid blue;*/
+  text-align: left;
+}
+
+.build-new-board{
   text-align: center;
 }
 
@@ -392,5 +398,22 @@ h5 {
   width: 40% !important;
 }
 
+.toggleSessionsView {
+/*   text-align: left; */
+/*   margin-top: 10px; */
+  width: 10%; 
+  display: inline-block;
+  margin-right: auto;
+  margin-left: 80%;
+/*   height:50px; */
+  font-size: 15px;
+/*   letter-spacing: 3px; */
+  border: none;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.4);
+  background: rgba(0,0,0,0.3);
+}
 
 
+
+ 
