@@ -18,6 +18,4 @@ module.exports = {
 
   // doArchiveBoard: () => { TODO: archives a finished board },
 
-  doGenerateNewId: () => { return Math.floor(Math.random() * 999 + 1); },
-
 };
