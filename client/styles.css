@@ -294,3 +294,103 @@ h5 {
   right:0;
   width: 33.33%;
 }
+
+.profile-pic {
+  width: 80%;
+  /*display: block;*/
+}
+
+
+.landing-page {
+  border: 2px solid black;
+}
+
+.profile-container{
+  border: 1px solid red;
+  float: left;
+  box-sizing: border-box;
+  width: 30%;
+  text-align: center;
+  padding: 10px;
+
+}
+
+.rightside-container{
+  border: 1px solid blue;
+/*   margin: 10px; */
+  float: left;
+  box-sizing: border-box;
+  padding:10px;
+  width: 70%;
+  text-align: center;
+  
+}
+.profile-section{
+/*   margin: 20px; */
+ border: 1px solid red;
+
+}
+.right-section{
+  border: 1px solid blue;
+  text-align: center;
+}
+
+.build-new-board input[type="radio"]{
+  display: inline;
+  /*width:40%;*/
+  /*background: none;*/
+  /*margin-right:auto;
+  margin-left: auto;
+  border: none;
+  border-bottom: 1px solid white;
+  height: 30px;
+  line-height: 30px;
+  font-size: 18px;
+  color:white;
+  outline:none;
+  margin-top: 5px;*/
+}
+
+.build-new-board input[type="text"]{
+  display: block;
+  width:80%;
+  background: none;
+  margin-right:auto;
+  margin-left: auto;
+  border: none;
+  border-bottom: 1px solid white;
+  height: 30px;
+  line-height: 30px;
+  font-size: 18px;
+  color:white;
+  outline:none;
+  margin-top: 5px;
+}
+
+.build-new-board button{
+  margin-top: 10px;
+  width: 80%;
+  margin-right: auto;
+  margin-left: auto;
+  height:50px;
+  font-size: 20px;
+  letter-spacing: 3px;
+  border:none;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.4);
+  background: rgba(0,0,0,0.3);
+}
+
+.build-new-board .search-user-radio{
+  display: inline-block;
+  /*width: 38% !important;*/
+  /*margin-left: 4%;*/
+}
+
+.build-new-board .search-user-text{
+  display: inline-block !important;
+  width: 40% !important;
+}
+
+
+
