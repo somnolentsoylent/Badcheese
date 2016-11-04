@@ -94,23 +94,25 @@ export default class Landing extends React.Component {
           
           <div className='right-section'>
             
-            {this.state.showBoardForm ? 
-              <div className='build-new-board'>
-                Create New Room
-                  <input type='text' placeholder='Enter Room Name...' ref='sessionName'/>
-                  <input type="radio" name="viewablity" onClick={(e) => this.updateAccess(true)} value="private"></input><span>Private</span>
-                  <input type='radio' name='viewablity' onClick={(e) => this.updateAccess(false)} value='public'></input><span>Public</span><br />
-                  <input className='search-user-text' type='text' placeholder='Search for user email...' ref='userEmail'/>
-                  <input className='search-user-radio' type='radio' onClick={(e) => this.updatePermission('read')} name='permission' value='read'></input><span>Read</span>
-                  <input className='search-user-radio' type='radio' onClick={(e) => this.updatePermission('write')} name='permission' value='write'></input><span>Write</span>
-                  <button onClick={e => this.addUserToList()}>Add User</button>
-                  <button onClick={e => this.newBoard()}>Create Board</button>
-              </div> 
+            {this.state.showBoardForm ?  
+              <div>
+                <button className='toggleSessionsView' onClick={e => this.setState({showBoardForm: false}) }>My Rooms</button>
+                <div className='build-new-board'>
+                    <input type='text' placeholder='Enter Room Name...' ref='sessionName'/>
+                    <input type="radio" name="viewablity" onClick={(e) => this.updateAccess(true)} value="private"></input><span>Private</span>
+                    <input type='radio' name='viewablity' onClick={(e) => this.updateAccess(false)} value='public'></input><span>Public</span><br />
+                    <input className='search-user-text' type='text' placeholder='Search for user email...' ref='userEmail'/>
+                    <input className='search-user-radio' type='radio' onClick={(e) => this.updatePermission('read')} name='permission' value='read'></input><span>Read</span>
+                    <input className='search-user-radio' type='radio' onClick={(e) => this.updatePermission('write')} name='permission' value='write'></input><span>Write</span>
+                    <button onClick={e => this.addUserToList()}>Add User</button>
+                    <button onClick={e => this.newBoard()}>Create Board</button>
+                </div> 
+             </div>
               : <div></div>}
 
             {!this.state.showBoardForm ? 
               <div className='my-sessions'>
-                <button onClick={e => this.setState({showBoardForm: true}) }>Create New Room</button>
+                <button className='toggleSessionsView' onClick={e => this.setState({showBoardForm: true}) }>Create Room</button>
               </div> 
               : <div></div>}
           </div>
