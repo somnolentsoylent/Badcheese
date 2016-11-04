@@ -12,8 +12,11 @@ module.exports = function(app, express){
     res.status(201).send(req.user);
   });
   app.post('/api/users/signup', userController.signup);
+  app.post('/api/users/getUserSessions', userController.getUserSessions);
+  app.get('api/users/:search', userController.userSearch)
 
   //session actions
+  app.post('/api/sessions/getSession', sessionController.getSession);
   app.post('/api/sessions/addSession', sessionController.addSession);
   app.post('/api/sessions/addUser', sessionController.addUser);
   app.post('/api/sessions/deleteSession', sessionController.deleteSession);

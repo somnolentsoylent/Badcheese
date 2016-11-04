@@ -30,6 +30,8 @@ const UserSchema = new Schema({
   boards: [{type: [Schema.Types.ObjectId], ref: 'Board' }]
 });
 
+UserSchema.index({ email: "text"});
+
 UserSchema.methods.comparePasswords = function (candidatePassword) {
   let savedPassword = this.password;
   return new Promise(function (resolve, reject) {
