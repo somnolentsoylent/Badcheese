@@ -25,7 +25,7 @@ export default class Landing extends React.Component {
   newBoard() {
 
     var sessionName = ReactDOM.findDOMNode(this.refs.sessionName).value;
-
+    
     var sessionObj = {
       invitedUsers: this.state.invitedUsers,
       name: sessionName,
@@ -48,6 +48,15 @@ export default class Landing extends React.Component {
         hashHistory.push('/'+data);
       })
     })
+  }
+
+  makeBoardWithID(sessionId){
+    fetch('http://localhost:3000/board/' + sessionId)
+      .then(response => response.json())
+      .then( data => {
+        // console.log(data)
+        hashHistory.push('/'+data);
+      })
   }
 
   addUserToList(){
@@ -91,21 +100,22 @@ export default class Landing extends React.Component {
     .then(userSessions=>{
       this.setState({mySessions: userSessions});
     })
-      // fetch('http://localhost:3000/api/sessions/addSession',{
-      //   method: 'POST',
-      //   headers: { "Content-Type" : "application/json" }
-      //   body: JSON.stringify(sessionObj)
-      // })
-      // .then(response => {
-      //   console.log(response)
-      //   return response.json()
-      // })
-      // .then( res => {
-      //   console.log(sessionId)
-      // })
-    // })
   }
 
+  autoComplete(e) {
+    if (e.target.value.length > 2) { 
+      let search = e.target.value
+      fetch('http://localhost:3000/api/users/search',{
+        method: 'POST',
+        headers: { "Content-Type" : "application/json" },
+        body: JSON.stringify({search: search})
+      })
+      .then(response => response.json())
+      .then(users => {
+        
+      })
+    }
+  }
   render() {
     // console.log('Props:', this.props.user)
     return (
@@ -126,14 +136,15 @@ export default class Landing extends React.Component {
               <div>
                 <button className='toggleSessionsView' onClick={e => this.setState({showBoardForm: false}) }>My Rooms</button>
                 <div className='build-new-board'>
-                    <input type='text' placeholder='Enter Room Name...' ref='sessionName'/>
-                    <input type="radio" name="viewablity" onClick={(e) => this.updateAccess(true)} value="private"></input><span>Private</span>
-                    <input type='radio' name='viewablity' onClick={(e) => this.updateAccess(false)} value='public'></input><span>Public</span><br />
-                    <input className='search-user-text' type='text' placeholder='Search for user email...' ref='userEmail'/>
-                    <input className='search-user-radio' type='radio' onClick={(e) => this.updatePermission('read')} name='permission' value='read'></input><span>Read</span>
-                    <input className='search-user-radio' type='radio' onClick={(e) => this.updatePermission('write')} name='permission' value='write'></input><span>Write</span>
-                    <button onClick={e => this.addUserToList()}>Add User</button>
-                    <button onClick={e => this.newBoard()}>Create Board</button>
+                  <h2 className='roomsTitle'>Create Room</h2>
+                  <input type='text' placeholder='Enter Room Name...' ref='sessionName'/>
+                  <input type="radio" name="viewablity" onClick={(e) => this.updateAccess(true)} value="private"></input><span>Private</span>
+                  <input type='radio' name='viewablity' onClick={(e) => this.updateAccess(false)} value='public'></input><span>Public</span><br />
+                  <input className='search-user-text' type='text' placeholder='Search for user email...' ref='userEmail'/>
+                  <input className='search-user-radio' type='radio' onClick={(e) => this.updatePermission('read')} name='permission' value='read'></input><span>Read</span>
+                  <input className='search-user-radio' type='radio' onClick={(e) => this.updatePermission('write')} name='permission' value='write'></input><span>Write</span>
+                  <button onClick={e => this.addUserToList()}>Add User</button>
+                  <button onClick={e => this.newBoard()}>Create Board</button>
                 </div> 
              </div>
               : <div></div>}
@@ -141,10 +152,13 @@ export default class Landing extends React.Component {
             {!this.state.showBoardForm ? 
               <div className='my-sessions'>
                 <button className='toggleSessionsView' onClick={e => this.setState({showBoardForm: true}) }>Create Room</button>
-                <div className='sessionsList'>
-                  {this.state.mySessions.map((elem)=> {
-                    return (<div>{elem.name}</div>)  
-                  })}
+                <div className='innerListBox'>
+                  <h2 className='roomsTitle'>My Rooms</h2>
+                  <div className='sessionsList'>
+                    {this.state.mySessions.map((elem)=> {
+                      return (<button key={elem._id.toString()} onClick={(e)=> this.makeBoardWithID(elem._id)} className='sessionListButton'>{elem.name}</button>)  
+                    })}
+                  </div>
                 </div>
               </div> 
               : <div></div>}

@@ -2,9 +2,11 @@
 var userModels = require('../../models/userModels');
 
 module.exports = (req, res) => {
-  var search = req.params.search;
+  var search = req.body.search;
+  console.log(search)
   userModels.userSearch(search)
   .then(user => {
+    console.log(user)
     res.status(200).send(user);
   })   
   .catch(error => {
