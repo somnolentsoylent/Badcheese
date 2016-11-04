@@ -40,12 +40,12 @@ export default class Landing extends React.Component {
       return response.json()
     })
     .then( sessionId => {
-      // fetch('http://localhost:3000/board/' + sessionId);
-      // .then(response => response.json())
-      // .then( data => {
-      //   console.log(data)
-        // hashHistory.push('/'+data);
-      // })
+      fetch('http://localhost:3000/board/' + sessionId)
+      .then(response => response.json())
+      .then( data => {
+        console.log(data)
+        hashHistory.push('/'+data);
+      })
     })
   }
 

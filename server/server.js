@@ -50,7 +50,6 @@ io.on('connection', (socket) => {
       socket.on('peerId', peerId => {
         peers[id] = peers[id] || [];
         peers[id].push(peerId);
-        console.log(peers[id])
         socket.emit('peers', peers[id]);
       })
       socket.on('newStreamer', peerId => {
