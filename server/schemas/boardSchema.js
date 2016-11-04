@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 
 var BoardSchema = new Schema({
   shapes: Object,
-  name: {type: String, required: true},
+  name: {type: String, default: 'Saved Board'},
   date: {type: Date, default: Date.now()}
 });
 

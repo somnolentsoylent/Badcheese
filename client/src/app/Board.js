@@ -65,7 +65,8 @@ class Board extends React.Component {
       draw: null,
       localStream: null,
       streams: [],
-      chatMessages: []
+      chatMessages: [],
+      session: {name: null}
     };
   }
   // when component mounts board gets created and drawer gets initiated and set to state
@@ -80,7 +81,7 @@ class Board extends React.Component {
     .then( response => response.json())
     .then( session => {
     var permission = false;
-
+    this.setState()
     if (session.private) {
       for (var i = 0; i < session.invites.length; i++) {
         if (session.invites[i].user === this.props.user._id) {
@@ -255,13 +256,42 @@ class Board extends React.Component {
   setLocalStream(stream) {
     this.setState({localStream: stream});
   }
+  saveBoardToUser() {
+    fetch('http://localhost:3000/api/boards/addBoardToUser',{
+      method: 'POST',
+      headers: { "Content-Type" : "application/json" },
+      body: JSON.stringify({board: {shapes: this.state.draw.shapes}, userId: this.props.user._id})
+    })
+    .then( response => response.text())
+    .then( response => {
+      console.log(response);
+    })
+  }
+  saveBoardToRoom() {
+    fetch('http://localhost:3000/api/boards/addBoardToSession',{
+      method: 'POST',
+      headers: { "Content-Type" : "application/json" },
+      body: JSON.stringify({board: {shapes: this.state.draw.shapes}, sessionId: this.state.session._id})
+    })
+    .then( response => response.text())
+    .then( response => {
+      console.log(response);
+    })
+  }
+  uploadBoard(board) {
+    socket.emit('boardChange', board)
+  }
   render() {
 
     return (
         <div>
           <div style={boardStyle}>
             <div style={topBar}>
-                <div style={drawTitle}> Drawmie {window.location.hash}</div>
+                <div onClick={e=>this.saveBoardToRoom()} className='inline'> Save Board to Room </div>
+                <div className='inline'> View Room Boards </div>
+                <div onClick={e=>this.saveBoardToUser()} className='inline'> Save Board to Your Boards </div>
+                <div className='inline'> View Your Boards </div>
+                <div className='inline'>{this.state.session.name}</div>
             </div>
             {/* this tag takes you back to the landing page */}
             <div style={tools}>
