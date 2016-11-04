@@ -6,7 +6,7 @@ const passport = require('passport');
 
 module.exports = function(app, express){
   // Create a new board
-  app.get('/board', handler.getNewBoard);
+  app.get('/board/:id', handler.getNewBoard);
   app.get('/api/users/auth', userController.isAuthorized);
   app.post('/api/users/login', passport.authenticate('local'), function(req, res) {
     res.status(201).send(req.user);

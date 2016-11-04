@@ -8,7 +8,7 @@ module.exports = {
   },
 
   getNewBoard: (req, res, next) => {
-    const newId = util.doGenerateNewId();
+    const newId = req.params.id
     console.log(`Creating new board with id: #${newId}`);
     util.doGetNewBoard(newId);
     res.json(newId);
