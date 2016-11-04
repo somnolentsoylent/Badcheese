@@ -2,6 +2,7 @@ var sessionModels = require('../../models/sessionModels');
 
 module.exports = (req, res) => {
   var session = req.body;
+  console.log(session)
   sessionModels.addSession(session)
   .then(success => {
     console.log(success)

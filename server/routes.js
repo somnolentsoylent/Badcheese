@@ -13,7 +13,7 @@ module.exports = function(app, express){
   });
   app.post('/api/users/signup', userController.signup);
   app.post('/api/users/getUserSessions', userController.getUserSessions);
-  app.get('api/users/:search', userController.userSearch)
+  app.post('/api/users/search', userController.userSearch)
 
   //session actions
   app.post('/api/sessions/getSession', sessionController.getSession);

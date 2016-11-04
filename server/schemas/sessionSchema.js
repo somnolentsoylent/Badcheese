@@ -4,19 +4,14 @@ var Schema = mongoose.Schema;
 var SessionSchema = new Schema({
   invitedUsers: [
     {
-      User: {type: Schema.Types.ObjectId, ref: 'User'},
-     Permission: String
+      email: String,
+      permission: String
     }
   ],
   imageUrl: String,
   name: { 
     type: String,
     required: true
-  },
-  host: { 
-    type: Schema.Types.ObjectId, 
-    ref: 'User'
-    // required: true
   },
   private: {
     type: Boolean,
