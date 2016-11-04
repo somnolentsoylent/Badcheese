@@ -2,7 +2,7 @@ html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  font-style: 'oblique';
+  font-family: 'oblique';
   height: 100%;
   background: linear-gradient(230deg, rgb(75, 207, 147), rgb(75, 121, 207), rgb(162, 75, 207)) 0% 0% / 300% 300%;
   animation: animation 30s ease infinite;
@@ -297,6 +297,7 @@ h5 {
 
 .profile-pic {
   width: 80%;
+  border-radius: 4px;
   /*display: block;*/
   box-shadow: 2px 2px 6px #000;
 }

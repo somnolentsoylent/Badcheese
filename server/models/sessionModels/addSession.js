@@ -2,15 +2,12 @@ var Session = require('../../schemas/sessionSchema');
 var User = require('../../schemas/userSchema');
 //add session to the database
 module.exports = (session) => {
-  console.log('in session')
   var newSession = new Session(session);
-  newSession.invitedUsers.push(session.host);
   return newSession.save()
   .then( event => {
     return Promise.all(
       event.invitedUsers.map( user => {
         return addSession(event._id, user.email)
-        .then((result)=>{console.log('yo',result)})
       })  
     )
   }).then( success => {

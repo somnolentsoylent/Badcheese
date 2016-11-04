@@ -29,9 +29,11 @@ export default class Landing extends React.Component {
     var sessionObj = {
       invitedUsers: this.state.invitedUsers,
       name: sessionName,
-      host: this.props.user._id,
       private: this.state.private
     };
+    sessionObj.invitedUsers.push({email: this.props.user.email, 
+      permission: 'write'})
+
     fetch('http://localhost:3000/api/sessions/addSession',{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
@@ -44,7 +46,7 @@ export default class Landing extends React.Component {
       fetch('http://localhost:3000/board/' + sessionId)
       .then(response => response.json())
       .then( data => {
-        // console.log(data)
+
         hashHistory.push('/'+data);
       })
     })
@@ -54,7 +56,6 @@ export default class Landing extends React.Component {
     fetch('http://localhost:3000/board/' + sessionId)
       .then(response => response.json())
       .then( data => {
-        // console.log(data)
         hashHistory.push('/'+data);
       })
   }
@@ -77,7 +78,7 @@ export default class Landing extends React.Component {
       tempArr.push(userToAdd);
       this.setState({ invitedUsers: tempArr});
     }
-    setTimeout((()=>console.log('invited:', this.state.invitedUsers)), 500);
+    // setTimeout((()=>console.log('invited:', this.state.invitedUsers)), 500);
   }
 
   updatePermission(permType){
