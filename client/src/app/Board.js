@@ -77,6 +77,7 @@ class Board extends React.Component {
       headers: { "Content-Type" : "application/json" },
       body: JSON.stringify({sessionId: currentRoom})
     })
+    .then( response => response.json())
     .then( session => {
     var permission = false;
 
