@@ -3,5 +3,6 @@ module.exports = {
   addUser: require('./addUser'),
   deleteSession: require('./deleteSession'),
   removeUser: require('./removeUser'),
-  sessionSearch: require('./sessionSearch')
+  sessionSearch: require('./sessionSearch'),
+  getSession: require('./getSession')
 }

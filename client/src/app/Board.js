@@ -4,6 +4,7 @@ import Render from '../../render.js';
 import initDrawer from '../../drawer.js';
 import Video from './Video';
 import Chat from './Chat';
+import { hashHistory } from 'react-router';
 
   var peer;
   var socket;
@@ -71,9 +72,31 @@ class Board extends React.Component {
   componentDidMount() {
     this.updateCanvas();
     const currentRoom = window.location.hash.slice(2);
+    fetch('http://localhost:3000/api/sessions/getSession',{
+      method: 'POST',
+      headers: { "Content-Type" : "application/json" },
+      body: JSON.stringify({sessionId: currentRoom})
+    })
+    .then( session => {
+    var permission = false;
+
+    if (session.private) {
+      for (var i = 0; i < session.invites.length; i++) {
+        if (session.invites[i].user === this.props.user._id) {
+          permission = session.invites[i].permission;
+          break;
+        }
+      }
+    } else {
+      permission = 'write';
+    }
+
+    if (!permission) {
+      hashHistory.push('/')
+    }
     //Socket Rooms
     socket = io();
-    socket.emit('addMeToRoom', currentRoom);
+    socket.emit('addMeToRoom', session._id);
     // Add peer video connection
     peer = new Peer(this.props.user._id, {
       key: 'r2jzzf71zn9izfr',
@@ -123,7 +146,7 @@ class Board extends React.Component {
 
 
     //Draw and render
-    const drawer = initDrawer();
+    const drawer = initDrawer(permission);
     this.setState({ draw: drawer });
     const render = Render('draw-canvas', drawer);
 
@@ -216,6 +239,7 @@ class Board extends React.Component {
     setInterval(tick, 100);
     window.requestAnimationFrame(render);
 
+    })
   }
 
   handleMessageSend (newMessage) {

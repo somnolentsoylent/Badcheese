@@ -1,5 +1,7 @@
 var initDrawer = function initDrawer(permission) {
-  var permission = true;
+  if (permission === 'read') {
+    var permission = false;
+  }
   var data = {
     color: 'black',
     shapes: {},
