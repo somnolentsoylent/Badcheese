@@ -10,6 +10,7 @@ module.exports = (req, res) => {
     res.status(201).send('Session Board Added!');
   })   
   .catch(error => {
+  	console.log(error);
     res.status(400).send('ERROR: Invalid Session Inputted');
   });
 };
