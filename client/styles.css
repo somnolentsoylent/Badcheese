@@ -313,32 +313,36 @@ h5 {
   box-sizing: border-box;
   width: 30%;
   text-align: center;
-  padding: 10px;
+  padding-left: 40px;
 
 }
 
 .rightside-container{
-  /*border: 1px solid blue;*/
+/*   border: 1px solid blue; */
 /*   margin: 10px; */
+/*   margin: none; */
   float: left;
   box-sizing: border-box;
-  padding:10px;
+/*   padding-left: 10px; */
+  
   width: 70%;
   text-align: center;
-  
 }
 .profile-section{
-/*   margin: 20px; */
+   margin: 0px; 
  /*border: 1px solid red;*/
 
 }
 .right-section{
-  /*border: 1px solid blue;*/
+/*   border: 1px solid blue; */
   text-align: left;
+
 }
 
 .build-new-board{
   text-align: center;
+  background: rgba(0,0,0,0.07);
+
 }
 
 .build-new-board input[type="radio"]{

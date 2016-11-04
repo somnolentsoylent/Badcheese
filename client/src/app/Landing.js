@@ -10,15 +10,17 @@ export default class Landing extends React.Component {
       showBoardForm: false,
       invitedUsers: [],
       private: false,
-      userToAdd: {}
+      userToAdd: {},
+      mySessions: []
     }
   }
 
   componentDidMount(){
-
+    this.getSessions();
   }
 
-
+//WHY DOESNT: the api call with addSessions work with the host being an email
+// string, i dont understand the message. could it be with other "board" stuff?
 //ADD IMAGE URL
   newBoard() {
 
@@ -29,21 +31,20 @@ export default class Landing extends React.Component {
       name: sessionName,
       host: this.props.user._id,
       private: this.state.private
-    }
+    };
     fetch('http://localhost:3000/api/sessions/addSession',{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
       body: JSON.stringify(sessionObj)
     })
     .then(response => {
-      console.log(response)
       return response.json()
     })
     .then( sessionId => {
       fetch('http://localhost:3000/board/' + sessionId)
       .then(response => response.json())
       .then( data => {
-        console.log(data)
+        // console.log(data)
         hashHistory.push('/'+data);
       })
     })
@@ -67,7 +68,7 @@ export default class Landing extends React.Component {
       tempArr.push(userToAdd);
       this.setState({ invitedUsers: tempArr});
     }
-    setTimeout((()=>console.log(this.state.invitedUsers)), 500);
+    setTimeout((()=>console.log('invited:', this.state.invitedUsers)), 500);
   }
 
   updatePermission(permType){
@@ -76,6 +77,33 @@ export default class Landing extends React.Component {
 
   updateAccess(accessType){
     this.setState({private: accessType});
+  }
+
+  getSessions(){
+     fetch('http://localhost:3000/api/users/getUserSessions',{
+      method: 'POST',
+      headers: { "Content-Type" : "application/json" },
+      body: JSON.stringify({userId: this.props.user._id})
+    })
+    .then(response=>{
+      return response.json()
+    })
+    .then(userSessions=>{
+      this.setState({mySessions: userSessions});
+    })
+      // fetch('http://localhost:3000/api/sessions/addSession',{
+      //   method: 'POST',
+      //   headers: { "Content-Type" : "application/json" }
+      //   body: JSON.stringify(sessionObj)
+      // })
+      // .then(response => {
+      //   console.log(response)
+      //   return response.json()
+      // })
+      // .then( res => {
+      //   console.log(sessionId)
+      // })
+    // })
   }
 
   render() {
@@ -113,6 +141,11 @@ export default class Landing extends React.Component {
             {!this.state.showBoardForm ? 
               <div className='my-sessions'>
                 <button className='toggleSessionsView' onClick={e => this.setState({showBoardForm: true}) }>Create Room</button>
+                <div className='sessionsList'>
+                  {this.state.mySessions.map((elem)=> {
+                    return (<div>{elem.name}</div>)  
+                  })}
+                </div>
               </div> 
               : <div></div>}
           </div>

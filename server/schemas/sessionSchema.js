@@ -4,8 +4,9 @@ var Schema = mongoose.Schema;
 var SessionSchema = new Schema({
   invitedUsers: [
     {
-      User: {type: Schema.Types.ObjectId, ref: 'User'},
-     Permission: String
+      // User: {type: Schema.Types.ObjectId, ref: 'User'},
+      email: String,
+      Permission: String
     }
   ],
   imageUrl: String,
@@ -14,8 +15,8 @@ var SessionSchema = new Schema({
     required: true
   },
   host: { 
-    type: Schema.Types.ObjectId, 
-    ref: 'User'
+    type: String //Schema.Types.ObjectId, 
+    // ref: 'User'
     // required: true
   },
   private: {
