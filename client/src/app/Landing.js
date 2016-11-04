@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { hashHistory } from 'react-router';
 
 export default class Landing extends React.Component {
@@ -6,21 +7,79 @@ export default class Landing extends React.Component {
     super(props)
 
     this.state = { 
-      showBoardForm: false
+      showBoardForm: false,
+      invitedUsers: [],
+      private: false,
+      userToAdd: {}
     }
   }
 
+  componentDidMount(){
+
+  }
+
+
+//ADD IMAGE URL
   newBoard() {
-    fetch('http://localhost:3000/board')
-    .then(response => response.json())
-    .then( data => {
-      console.log(data)
-      hashHistory.push('/'+data);
+
+    var sessionName = ReactDOM.findDOMNode(this.refs.sessionName).value;
+
+    var sessionObj = {
+      invitedUsers: this.state.invitedUsers,
+      name: sessionName,
+      host: this.props.user._id,
+      private: this.state.private
+    }
+    fetch('http://localhost:3000/api/sessions/addSession',{
+      method: 'POST',
+      headers: { "Content-Type" : "application/json" },
+      body: JSON.stringify(sessionObj)
+    })
+    .then(response => {
+      console.log(response)
+      return response.json()
+    })
+    .then( sessionId => {
+      // fetch('http://localhost:3000/board/' + sessionId);
+      // .then(response => response.json())
+      // .then( data => {
+      //   console.log(data)
+        // hashHistory.push('/'+data);
+      // })
     })
   }
 
+  addUserToList(){
+    var tempArr = this.state.invitedUsers.slice();
+    var val = ReactDOM.findDOMNode(this.refs.userEmail).value;
+    var perm = this.state.permission;
+    var userToAdd = {
+      email: val,
+      permission: perm
+    }
+    var exists = false; 
+    tempArr.forEach( (elem)=> {
+      if(elem.email === val){
+        exists = true
+      }
+    });
+    if(!exists && val !== ''){
+      tempArr.push(userToAdd);
+      this.setState({ invitedUsers: tempArr});
+    }
+    setTimeout((()=>console.log(this.state.invitedUsers)), 500);
+  }
+
+  updatePermission(permType){
+    this.setState({permission: permType});
+  }
+
+  updateAccess(accessType){
+    this.setState({private: accessType});
+  }
+
   render() {
-    console.log('Props:', this.props.user)
+    // console.log('Props:', this.props.user)
     return (
       <div className='landing-page'>
         
@@ -37,17 +96,15 @@ export default class Landing extends React.Component {
             
             {this.state.showBoardForm ? 
               <div className='build-new-board'>
-                CREATE NEW Rooms
-                <form>
-                  <input type='text' placeholder='Enter Room Name...'/>
-                  <input type="radio" name="viewablity" value="private">Private</input>
-                  <input type='radio' name='viewablity' value='public'>Public</input><br />
-                  <input className='search-user' type='text' placeholder='Search for user email...'/>
-                  <input type='radio' name='permission' value='read'>Read</input><br />
-                  <input type='radio' name='permission' value='write'>Write</input><br />
-                  <button className='search-user'>Add User</button>
+                Create New Room
+                  <input type='text' placeholder='Enter Room Name...' ref='sessionName'/>
+                  <input type="radio" name="viewablity" onClick={(e) => this.updateAccess(true)} value="private"></input><span>Private</span>
+                  <input type='radio' name='viewablity' onClick={(e) => this.updateAccess(false)} value='public'></input><span>Public</span><br />
+                  <input className='search-user-text' type='text' placeholder='Search for user email...' ref='userEmail'/>
+                  <input className='search-user-radio' type='radio' onClick={(e) => this.updatePermission('read')} name='permission' value='read'></input><span>Read</span>
+                  <input className='search-user-radio' type='radio' onClick={(e) => this.updatePermission('write')} name='permission' value='write'></input><span>Write</span>
+                  <button onClick={e => this.addUserToList()}>Add User</button>
                   <button onClick={e => this.newBoard()}>Create Board</button>
-                </form>
               </div> 
               : <div></div>}
 

@@ -296,8 +296,7 @@ h5 {
 }
 
 .profile-pic {
-  width: 200px;
-  height: 200px;
+  width: 80%;
   /*display: block;*/
 }
 
@@ -382,12 +381,16 @@ h5 {
   background: rgba(0,0,0,0.3);
 }
 
-.build-new-board .search-user{
-  display: inline-block !important;
-  width: 38% !important;
-  margin-left: 4%;
+.build-new-board .search-user-radio{
+  display: inline-block;
+  /*width: 38% !important;*/
+  /*margin-left: 4%;*/
 }
 
+.build-new-board .search-user-text{
+  display: inline-block !important;
+  width: 40% !important;
+}
 
 
 

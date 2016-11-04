@@ -11,6 +11,8 @@ module.exports = (session) => {
         // .then((result)=>{console.log(result)})
       })  
     )
+  }).then( success => {
+    return Session.findOne({name: session.name}).exec()
   })
 }
 
