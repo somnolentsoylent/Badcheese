@@ -43,7 +43,7 @@ io.on('connection', (socket) => {
   socket.on('addMeToRoom', (id) => {
     chatRooms[id] = chatRooms[id] || []
     socket.emit('fetchMessages', chatRooms[id])
-    const liveBoard = util.doGetBoard(id);
+    let liveBoard = util.doGetBoard(id);
     if (liveBoard) {
       socket.join(id);
       io.to(id).emit('renderme', liveBoard.board);
@@ -51,6 +51,21 @@ io.on('connection', (socket) => {
         peers[id] = peers[id] || [];
         peers[id].push(peerId);
         socket.emit('peers', peers[id]);
+      })
+      socket.on('boardChange', shapes => {
+        var length = 0;
+        for (var key in shapes) {
+          length++;
+        }
+        liveBoard.reset();
+        liveBoard.board.shapes = shapes;
+        liveBoard.board.next = length;
+        console.log('new Live Board', liveBoard.board);
+        io.to(id).emit('newBoard', liveBoard.board);
+      })
+      socket.on('resetBoard', () => {
+        liveBoard.reset();
+        io.to(id).emit('newBoard', liveBoard.board)
       })
       socket.on('newStreamer', peerId => {
         let i = peers[id].indexOf(peerId);

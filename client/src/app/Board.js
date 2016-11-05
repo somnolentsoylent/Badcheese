@@ -4,10 +4,15 @@ import Render from '../../render.js';
 import initDrawer from '../../drawer.js';
 import Video from './Video';
 import Chat from './Chat';
+import SaveToRoomModal from './SaveToRoomModal';
+import SaveToUserModal from './SaveToUserModal';
+import ViewUserBoards from './ViewUserBoards';
+import ViewRoomBoards from './ViewRoomBoards';
 import { hashHistory } from 'react-router';
 
   var peer;
   var socket;
+  var drawer;
 
 
     const container = {
@@ -66,7 +71,8 @@ class Board extends React.Component {
       localStream: null,
       streams: [],
       chatMessages: [],
-      session: {name: null}
+      session: {name: null},
+      modal: false
     };
   }
   // when component mounts board gets created and drawer gets initiated and set to state
@@ -81,10 +87,10 @@ class Board extends React.Component {
     .then( response => response.json())
     .then( session => {
     var permission = false;
-    this.setState()
+    this.setState({session: session})
     if (session.private) {
       for (var i = 0; i < session.invites.length; i++) {
-        if (session.invites[i].user === this.props.user._id) {
+        if (session.invites[i].user === this.props.user.email) {
           permission = session.invites[i].permission;
           break;
         }
@@ -148,7 +154,7 @@ class Board extends React.Component {
 
 
     //Draw and render
-    const drawer = initDrawer(permission);
+    drawer = initDrawer(permission);
     this.setState({ draw: drawer });
     const render = Render('draw-canvas', drawer);
 
@@ -238,6 +244,11 @@ class Board extends React.Component {
       loadChange(serverData);
     });
 
+    socket.on('newBoard', (board) => {
+      drawer.data.shapes = {};
+      loadChange(board);
+    })
+
     setInterval(tick, 100);
     window.requestAnimationFrame(render);
 
@@ -256,22 +267,22 @@ class Board extends React.Component {
   setLocalStream(stream) {
     this.setState({localStream: stream});
   }
-  saveBoardToUser() {
+  saveBoardToUser(name) {
     fetch('http://localhost:3000/api/boards/addBoardToUser',{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
-      body: JSON.stringify({board: {shapes: this.state.draw.shapes}, userId: this.props.user._id})
+      body: JSON.stringify({board: {shapes: this.state.draw.data.shapes, name: name || this.state.session._id}, userId: this.props.user._id})
     })
     .then( response => response.text())
     .then( response => {
       console.log(response);
     })
   }
-  saveBoardToRoom() {
+  saveBoardToRoom(name) {
     fetch('http://localhost:3000/api/boards/addBoardToSession',{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
-      body: JSON.stringify({board: {shapes: this.state.draw.shapes}, sessionId: this.state.session._id})
+      body: JSON.stringify({board: {shapes: this.state.draw.data.shapes, name: name || this.state.session._id}, sessionId: this.state.session._id})
     })
     .then( response => response.text())
     .then( response => {
@@ -279,18 +290,43 @@ class Board extends React.Component {
     })
   }
   uploadBoard(board) {
+    console.log('Emitted');
     socket.emit('boardChange', board)
+  }
+  closeModal() {
+    this.setState({modal: false});
+  }
+  getModal() {
+    if (this.state.modal === 'saveToRoom') {
+      return (<SaveToRoomModal session={this.state.session._id} close={this.closeModal.bind(this)} save={this.saveBoardToRoom.bind(this)}/>)
+    } else if (this.state.modal === 'saveToUser') {
+      return (<SaveToUserModal user={this.props.user} close={this.closeModal.bind(this)} save={this.saveBoardToUser.bind(this)}/>)
+    } else if (this.state.modal === 'viewUserBoards') {
+      return (<ViewUserBoards user={this.props.user} close={this.closeModal.bind(this)} upload={this.uploadBoard.bind(this)}/>)
+    } else if (this.state.modal === 'viewRoomBoards') {
+      return (<ViewRoomBoards session={this.state.session._id} close={this.closeModal.bind(this)} upload={this.uploadBoard.bind(this)}/>)
+    } else {
+      return <div></div>
+    }
+  }
+  setModal(state) {
+    this.setState({modal: state});
+  }
+  reset() {
+   socket.emit('resetBoard');
   }
   render() {
 
     return (
         <div>
+          {this.getModal()}
           <div style={boardStyle}>
             <div style={topBar}>
-                <div onClick={e=>this.saveBoardToRoom()} className='inline'> Save Board to Room </div>
-                <div className='inline'> View Room Boards </div>
-                <div onClick={e=>this.saveBoardToUser()} className='inline'> Save Board to Your Boards </div>
-                <div className='inline'> View Your Boards </div>
+                <div onClick={e => this.setModal('saveToRoom')} className='inline'> Save Board to Room </div>
+                <div onClick={e => this.setModal('viewRoomBoards')} className='inline'> View Room Boards </div>
+                <div onClick={e => this.setModal('saveToUser')} className='inline'> Save Board to Your Boards </div>
+                <div onClick={e => this.setModal('viewUserBoards')} className='inline'> View Your Boards </div>
+                <div onClick={e => this.reset()} className='inline'> Clear Board</div>
                 <div className='inline'>{this.state.session.name}</div>
             </div>
             {/* this tag takes you back to the landing page */}
