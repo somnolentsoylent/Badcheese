@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 
 export default class SignUp extends React.Component {
 	constructor(props) {
@@ -9,38 +10,25 @@ export default class SignUp extends React.Component {
 	}
 
 	signUp() {
-		var password = ReactDOM.findDOMNode(this.refs.password).value;
-		var signUpInfo = {
-		  firstName: ReactDOM.findDOMNode(this.refs.fName).value,
-		  lastName: ReactDOM.findDOMNode(this.refs.lName).value,
-		  email: ReactDOM.findDOMNode(this.refs.email).value,
-		  password: password
-		}
-    console.log(signUpInfo)
-		fetch('http://localhost:3000/api/users/signup',{
-	       method: 'POST',
-	       headers: { "Content-Type" : "application/json" },
-	       body: JSON.stringify(signUpInfo)
+	  let signupFirstName = ReactDOM.findDOMNode(this.refs.fName).value;
+	  let signupLastName = ReactDOM.findDOMNode(this.refs.lName).value;
+	  let signupEmail = ReactDOM.findDOMNode(this.refs.email).value;
+		let signupPassword = ReactDOM.findDOMNode(this.refs.password).value;
+
+		axios.post('http://localhost:3000/api/users/signup',{
+				firstName: signupFirstName,
+				lastName: signupLastName,
+				email: signupEmail,
+				password: signupPassword
 	    })
-	    .then(response => {
-        console.log(response)
-	      return response.text();
+	    .then( response => {
+				let user = response.data;
+        console.log(user);
+				this.props.login(user);
 	    })
-	    .then( email => {
-        console.log(email)
-	    	return fetch('http://localhost:3000/api/users/login',{
-	        method: 'POST',
-	        headers: { "Content-Type" : "application/json" },
-	        body: JSON.stringify({email: email, password: password})
-	    	})
-	    })
-      .then(response => {
-        return response.json()
-      })
-      .then( user => {
-        console.log(user)
-        this.props.login(user);
-      })
+			.catch( err => {
+				conole.error(err);
+			})
 	}
 
 	render() {

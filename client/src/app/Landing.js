@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { hashHistory } from 'react-router';
+import axios from 'axios';
 
 export default class Landing extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = { 
+    this.state = {
       showBoardForm: false,
       invitedUsers: [],
       private: false,
@@ -25,13 +26,13 @@ export default class Landing extends React.Component {
   newBoard() {
 
     var sessionName = ReactDOM.findDOMNode(this.refs.sessionName).value;
-    
+
     var sessionObj = {
       invitedUsers: this.state.invitedUsers,
       name: sessionName,
       private: this.state.private
     };
-    sessionObj.invitedUsers.push({email: this.props.user.email, 
+    sessionObj.invitedUsers.push({email: this.props.user.email,
       permission: 'write'})
 
     fetch('http://localhost:3000/api/sessions/addSession',{
@@ -68,7 +69,7 @@ export default class Landing extends React.Component {
       email: val,
       permission: perm
     }
-    var exists = false; 
+    var exists = false;
     tempArr.forEach( (elem)=> {
       if(elem.email === val){
         exists = true
@@ -104,7 +105,7 @@ export default class Landing extends React.Component {
   }
 
   autoComplete(e) {
-    if (e.target.value.length > 2) { 
+    if (e.target.value.length > 2) {
       let search = e.target.value
       fetch('http://localhost:3000/api/users/search',{
         method: 'POST',
@@ -113,7 +114,7 @@ export default class Landing extends React.Component {
       })
       .then(response => response.json())
       .then(users => {
-        
+
       })
     }
   }
@@ -121,7 +122,7 @@ export default class Landing extends React.Component {
     // console.log('Props:', this.props.user)
     return (
       <div className='landing-page'>
-        
+
         <div className='profile-container'>
           <div className='profile-section'>
             <img className='profile-pic' src={this.props.user.photo}></img>
@@ -130,10 +131,10 @@ export default class Landing extends React.Component {
         </div>
 
         <div className='rightside-container'>
-          
+
           <div className='right-section'>
-            
-            {this.state.showBoardForm ?  
+
+            {this.state.showBoardForm ?
               <div>
                 <button className='toggleSessionsView' onClick={e => this.setState({showBoardForm: false}) }>My Rooms</button>
                 <div className='build-new-board'>
@@ -146,11 +147,11 @@ export default class Landing extends React.Component {
                   <input className='search-user-radio' type='radio' onClick={(e) => this.updatePermission('write')} name='permission' value='write'></input><span>Write</span>
                   <button className='add-user' onClick={e => this.addUserToList()}>Add User</button>
                   <button className='create-board' onClick={e => this.newBoard()}>Create Board</button>
-                </div> 
+                </div>
              </div>
               : <div></div>}
 
-            {!this.state.showBoardForm ? 
+            {!this.state.showBoardForm ?
               <div className='my-sessions'>
                 <button className='toggleSessionsView' onClick={e => this.setState({showBoardForm: true}) }>Create Room</button>
                 <div className='innerListBox'>
@@ -175,11 +176,11 @@ export default class Landing extends React.Component {
                             <p>Currently Online: 2</p>
                           </div>
                         </div>
-                        )  
+                        )
                     })}
                   </div>
                 </div>
-              </div> 
+              </div>
               : <div></div>}
           </div>
 
