@@ -2,7 +2,7 @@ html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  font-family: 'oblique';
+  font-family: 'Montserrat', sans-serif;
   height: 100%;
   background: linear-gradient(230deg, rgb(75, 207, 147), rgb(75, 121, 207), rgb(162, 75, 207)) 0% 0% / 300% 300%;
   animation: animation 30s ease infinite;
@@ -10,9 +10,20 @@ html, body {
   -moz-animation: animation 30s ease infinite;
 }
 
-button {
+button, input, textarea {
   outline: 0;
+  font-family: 'Montserrat', sans-serif;
 }
+
+.refresh-spinner {
+  -webkit-animation:spin 2s linear infinite;
+  -moz-animation:spin 2s linear infinite;
+  animation:spin 2s linear infinite;
+}
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
 @-webkit-keyframes animation {
     0%{background-position:0% 50%}
@@ -347,7 +358,6 @@ input:-webkit-autofill:active {
 
 .fullName{
   color: white;
-  font-family: arial;
   font-size: 18px;
   letter-spacing: 1px;
 }
@@ -359,13 +369,16 @@ input:-webkit-autofill:active {
   float: left;
   box-sizing: border-box;
 /*   padding-left: 10px; */
-  
+
   width: 70%;
   text-align: center;
 }
 .profile-section{
    margin: 0px;
+<<<<<<< 56334d99f6c3e0f55bc202a56d02e5b3a9f426b2
     
+=======
+>>>>>>> add new font
  /*border: 1px solid red;*/
 
 }
@@ -449,7 +462,7 @@ input:-webkit-autofill:active {
 .toggleSessionsView {
 /*   text-align: left; */
 /*   margin-top: 10px; */
-  width: 15%; 
+  width: 15%;
   display: inline-block;
   margin-right: 40px;
 
@@ -475,12 +488,11 @@ input:-webkit-autofill:active {
 
 .roomsTitle{
   color: white;
-  font-family: arial;
   font-weight: normal;
   padding-top: 10px;
   padding-bottom: 10px;
   margin: 0px;
-  
+
 }
 
 .sessionsList{
@@ -497,7 +509,7 @@ input:-webkit-autofill:active {
   width: 80%;
   margin-right: auto;
   margin-left: auto;
-  /*height:50px;*/ 
+  /*height:50px;*/
   font-size: 20px;
 /*   letter-spacing: 3px; */
   color: white;
@@ -505,7 +517,6 @@ input:-webkit-autofill:active {
   border:none;
   border-radius: 4px;
   background: rgba(0,0,0,0.3);
-  font-family: arial;
   padding-top: 15px;
   padding-bottom: 15px;
 }
@@ -518,7 +529,7 @@ input:-webkit-autofill:active {
 .sessionListButton:hover {
   background: rgba(0,0,0,0.5);
 
-  cursor: pointer;  
+  cursor: pointer;
 
 }
 
@@ -586,9 +597,12 @@ button:hover{
   bottom: 0px,
   left: 0px
 }
+<<<<<<< 56334d99f6c3e0f55bc202a56d02e5b3a9f426b2
 
 .cursor-pointer {
   cursor: pointer;
 }
 
 
+=======
+>>>>>>> add new font
