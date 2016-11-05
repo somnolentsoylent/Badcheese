@@ -13,7 +13,7 @@ html, body {
 @-webkit-keyframes animation {
     0%{background-position:0% 50%}
     50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+    100%{background-poversition:0% 50%}
 }
 @-moz-keyframes animation {
     0%{background-position:0% 50%}
@@ -428,18 +428,22 @@ h5 {
 }
 
 .roomsTitle{
-  margin-right: auto;
-  margin-left: auto;
   color: white;
   font-family: arial;
   font-weight: normal;
   padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 0px;
   
 }
 
 .sessionsList{
   text-align: center;
-  /*background: rgba(0,0,0,0.07);*/
+  height: 72vh;
+  overflow: scroll;
+  padding-bottom: 20px;
+  padding-top: 0;
+
 }
 
 .sessionListButton {
@@ -447,18 +451,39 @@ h5 {
   width: 80%;
   margin-right: auto;
   margin-left: auto;
-  height:50px;
+  /*height:50px;*/
   font-size: 20px;
-  letter-spacing: 3px;
+/*   letter-spacing: 3px; */
   border:none;
   color: white;
   border: 1px solid rgba(255,255,255,0.4);
   background: rgba(0,0,0,0.3);
+  font-family: arial;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
+.sessionSubComponents {
+  margin-left: 20px;
+  text-align: left;
+}
 
-.inline {
+.sessionListButton p{
+  padding-top: 8px;
+  margin: 0;
+  font-size: 17px;
+  letter-spacing: 1px;
+  display: block;
+}
+
+h3{
+  font-size: 19px;
+  font-weight: normal;
+/*   text-decoration: underline; */
+  border-bottom: 1px solid white;
   display: inline-block;
+  margin: 0
 }
+
 
 

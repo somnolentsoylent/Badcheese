@@ -140,7 +140,7 @@ export default class Landing extends React.Component {
                   <h2 className='roomsTitle'>Create Room</h2>
                   <input type='text' placeholder='Enter Room Name...' ref='sessionName'/>
                   <input type="radio" name="viewablity" onClick={(e) => this.updateAccess(true)} value="private"></input><span>Private</span>
-                  <input type='radio' name='viewablity' onClick={(e) => this.updateAccess(false)} value='public'></input><span>Public</span><br />
+                  <input type='radio' name='viewablity' onClick={(e) => this.updateAccess(false)} value='public' checked='checked'></input><span>Public</span><br />
                   <input className='search-user-text' type='text' placeholder='Search for user email...' ref='userEmail'/>
                   <input className='search-user-radio' type='radio' onClick={(e) => this.updatePermission('read')} name='permission' value='read'></input><span>Read</span>
                   <input className='search-user-radio' type='radio' onClick={(e) => this.updatePermission('write')} name='permission' value='write'></input><span>Write</span>
@@ -157,7 +157,25 @@ export default class Landing extends React.Component {
                   <h2 className='roomsTitle'>My Rooms</h2>
                   <div className='sessionsList'>
                     {this.state.mySessions.map((elem)=> {
-                      return (<button key={elem._id.toString()} onClick={(e)=> this.makeBoardWithID(elem._id)} className='sessionListButton'>{elem.name}</button>)  
+                      //find MY elem's email and get the permission from each elemenet here
+                      var myPermission;
+                      var userCount = elem.invitedUsers.length;
+                      elem.invitedUsers.forEach((user)=> {
+                        if(user.email === this.props.user.email){
+                          myPermission = user.permission;
+                        }
+                      });
+                      return (
+                        <div key={elem._id.toString()} onClick={(e)=> this.makeBoardWithID(elem._id)} className='sessionListButton'>
+                          <h3>{elem.name}</h3>
+                          <div className='sessionSubComponents'>
+                            <p></p>
+                            <p>My permission: {myPermission}</p>
+                            <p>Invited Count: {userCount}</p>
+                            <p>Currently Online: 2</p>
+                          </div>
+                        </div>
+                        )  
                     })}
                   </div>
                 </div>
