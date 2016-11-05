@@ -376,7 +376,7 @@ input:-webkit-autofill:active {
 .profile-section{
    margin: 0px;
 <<<<<<< 56334d99f6c3e0f55bc202a56d02e5b3a9f426b2
-    
+
 =======
 >>>>>>> add new font
  /*border: 1px solid red;*/
@@ -576,6 +576,21 @@ h3{
   border:none;
   border-radius: 4px;
   background: white;
+}
+
+.topBarItem{
+  display: inline;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+.topBarItem:hover{
+  cursor: pointer;
+  color:purple;
+}
+
+.tools:hover{
+  cursor: pointer;
+  color:purple;
 }
 
 button:hover{
