@@ -1,7 +1,7 @@
 // ViewRoomBoards.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Modal from 'react-modal';
+
 
 export default class ViewRoomBoards extends React.Component {
 	constructor(props) {

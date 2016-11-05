@@ -1,7 +1,7 @@
 // ViewUserBoards.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Modal from 'react-modal';
+
 
 export default class ViewUserBoards extends React.Component {
 	constructor(props) {
