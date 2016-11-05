@@ -506,7 +506,9 @@ button:active {
 
 .sessionListButton:hover {
   background: rgba(0,0,0,0.5);
+
   cursor: pointer;  
+
 }
 
 .sessionListButton p{
