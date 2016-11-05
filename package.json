@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha ./specs test",
-    "start": "node server/server.js"
+    "start": "node server/server.js",
+    "build": "webpack"
+
   },
   "repository": {
     "type": "git",
