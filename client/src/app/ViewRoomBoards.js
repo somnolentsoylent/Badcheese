@@ -38,7 +38,7 @@ export default class ViewRoomBoards extends React.Component {
 			<div onClick={e => this.props.close()} className='overlay'> </div>
 			<div className='content'>
 				<h2>Room Boards</h2>
-				{this.state.boards.map(board => <div onClick={e => this.props.upload(board.shapes)}>{board.name}</div>)}
+				{this.state.boards.map(board => <div className='cursor-pointer' onClick={e => this.props.upload(board.shapes)}>{board.name}</div>)}
 			</div>
 			</div>
 			)
