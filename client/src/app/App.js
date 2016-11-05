@@ -3,6 +3,16 @@ import Auth from './Auth';
 import Nav from './Nav';
 import axios from 'axios';
 
+const spinnerContainer = {
+  display: 'fixed',
+  top: 0,
+  left: 0,
+  bottom: 0,
+  right: 0,
+  textAlign: 'center',
+  paddingTop: '200px'
+}
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -46,7 +56,12 @@ export default class App extends React.Component {
         )
       }
     } else {
-      return <div>Loading</div>
+      return (
+        <div style={spinnerContainer}>
+          <i style={{color:'white'}} className='material-icons refresh-spinner'>refresh</i>
+          <div style={{color:'white'}}>Loading</div>
+        </div>
+      )
     }
   }
 }
