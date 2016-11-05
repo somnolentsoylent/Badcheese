@@ -40,7 +40,7 @@ import { hashHistory } from 'react-router';
 
     const boardWidth = document.body.offsetWidth * .60;
     const topBar = {
-      height: window.document.body.offsetHeight * .08,
+      height: window.document.body.offsetHeight * .04,
       width: tools.width + boardWidth,
       background: 'white',
       position:'relative',
@@ -330,12 +330,11 @@ class Board extends React.Component {
           {this.getModal()}
           <div style={boardStyle}>
             <div style={topBar}>
-                <div onClick={e => this.setModal('saveToRoom')} className='inline'> Save Board to Room </div>
-                <div onClick={e => this.setModal('viewRoomBoards')} className='inline'> View Room Boards </div>
-                <div onClick={e => this.setModal('saveToUser')} className='inline'> Save Board to Your Boards </div>
-                <div onClick={e => this.setModal('viewUserBoards')} className='inline'> View Your Boards </div>
-                <div onClick={e => this.reset()} className='inline'> Clear Board</div>
-                <div className='inline'>{this.state.session.name}</div>
+                <div onClick={e => this.setModal('saveToRoom')} className='topBarItem'> Save Board to Room </div>
+                <div onClick={e => this.setModal('viewRoomBoards')} className='topBarItem'> View Room Boards </div>
+                <div onClick={e => this.setModal('saveToUser')} className='topBarItem'> Save Board to Your Boards </div>
+                <div onClick={e => this.setModal('viewUserBoards')} className='topBarItem'> View Your Boards </div>
+                <div onClick={e => this.reset()} className='topBarItem'> Clear Board</div>
             </div>
             {/* this tag takes you back to the landing page */}
             <div style={tools}>
