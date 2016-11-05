@@ -545,7 +545,7 @@ h3{
     left              : 0;
     right             : 0;
     bottom            : 0;
-    background-color   : rgba(0, 0, 0, 0.3);
+    background-color   : rgba(0, 0, 0, 0.1);
     z-index:99;
   }
 .content {
@@ -556,13 +556,15 @@ h3{
   width: 50%;
   margin-top: 200px;
   margin-left: 25%;
-  border                     : 1px solid #ccc;
-  background                 : white;
   overflow                   : auto;
-  border-radius               : 4px;
   outline                    : none;
   padding                    : 20px;
   z-index: 100;
+  color: black;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, .6);
+  border:none;
+  border-radius: 4px;
+  background: white;
 }
 
 button:hover{
@@ -583,6 +585,10 @@ button:hover{
   right: 0px,
   bottom: 0px,
   left: 0px
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 
