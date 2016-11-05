@@ -35,11 +35,11 @@ var initDrawer = function initDrawer(permission) {
   }
 
   class Shape {
-    constructor(type, points, strokeColor, fillColor) {
+    constructor(type, points, strokeColor, fillColor, lineWidth) {
       this.type = type;
       this.points = points;
       this.radius = 0;
-      this.lineWidth = 2;
+      this.lineWidth = lineWidth || 2;
       this.lineJoin = LineTypes.round;
       this.lineCap = LineTypes.round;
       this.strokeColor = strokeColor;
@@ -61,9 +61,12 @@ var initDrawer = function initDrawer(permission) {
       this.ShapeTypes = ShapeTypes;
       this.LineTypes = LineTypes;
       this.Colors = Colors;
+      this.color = 'rgba(0,0,0';
       this.fillColor = null;
       this.strokeColor = Colors.red;
       this.colorStroke = 'stroke';
+      this.strokeWidth = 2;
+      this.transparency = ',1)';
       // keep this last so state is setup to hanlde drawing
       this.addListeners();
     }
@@ -81,12 +84,16 @@ var initDrawer = function initDrawer(permission) {
       this.changeColor(this.strokeColor || this.fillColor);
     }
 
-    changeColor(color) {
+    changeColor(color, transparency) {
+      if (transparency) {
+        this.transparency = ',' + transparency + ')';
+      }
+      this.color = color;
       if (this.colorStroke === 'stroke') {
-        this.strokeColor = color;
+        this.strokeColor = this.color + this.transparency;
         this.fillColor = null;
       } else {
-        this.fillColor = color;
+        this.fillColor = this.color + this.transparency;
         this.strokeColor = null;
       }
     }
@@ -107,6 +114,10 @@ var initDrawer = function initDrawer(permission) {
       } else {
         this.enableIsSelecting();
       }
+    }
+
+    changeWidth(width) {
+      this.strokeWidth = width;
     }
 
     getSelectedShape(mousePoint) {
@@ -232,7 +243,7 @@ var initDrawer = function initDrawer(permission) {
 
       var points = [mousePoint];
       this.data.currentShape = new Shape(this.currentShapeType, points,
-        this.strokeColor, this.fillColor);
+        this.strokeColor, this.fillColor, this.strokeWidth);
       }
 
       // this.shapes.push(this.currentShape);

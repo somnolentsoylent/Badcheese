@@ -67,7 +67,7 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      draw: null,
+      draw: {data: { color: 'black'}},
       localStream: null,
       streams: [],
       chatMessages: [],

@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 var bluebird = require('bluebird');
 mongoose.Promise = bluebird;
 const passport = require('passport');
+const User = require('./schemas/userSchema.js')
 
 
 const port = 3000;
