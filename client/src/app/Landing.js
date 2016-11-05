@@ -125,7 +125,7 @@ export default class Landing extends React.Component {
         <div className='profile-container'>
           <div className='profile-section'>
             <img className='profile-pic' src={this.props.user.photo}></img>
-            <p>{this.props.user.firstName} {this.props.user.lastName}</p>
+            <p className='fullName'>{this.props.user.firstName} {this.props.user.lastName}</p>
           </div>
         </div>
 
@@ -144,8 +144,8 @@ export default class Landing extends React.Component {
                   <input className='search-user-text' type='text' placeholder='Search for user email...' ref='userEmail'/>
                   <input className='search-user-radio' type='radio' onClick={(e) => this.updatePermission('read')} name='permission' value='read'></input><span>Read</span>
                   <input className='search-user-radio' type='radio' onClick={(e) => this.updatePermission('write')} name='permission' value='write'></input><span>Write</span>
-                  <button onClick={e => this.addUserToList()}>Add User</button>
-                  <button onClick={e => this.newBoard()}>Create Board</button>
+                  <button className='add-user' onClick={e => this.addUserToList()}>Add User</button>
+                  <button className='create-board' onClick={e => this.newBoard()}>Create Board</button>
                 </div> 
              </div>
               : <div></div>}

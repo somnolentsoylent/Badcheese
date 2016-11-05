@@ -336,13 +336,18 @@ input:-webkit-autofill:active {
 }
 
 .profile-container{
-  /*border: 1px solid red;*/
   float: left;
   box-sizing: border-box;
   width: 30%;
   text-align: center;
   padding-left: 40px;
+}
 
+.fullName{
+  color: white;
+  font-family: arial;
+  font-size: 18px;
+  letter-spacing: 1px;
 }
 
 .rightside-container{
@@ -418,6 +423,7 @@ input:-webkit-autofill:active {
   border: 1px solid rgba(255,255,255,0.4);
   background: rgba(0,0,0,0.3);
 }
+
 .build-new-board .search-user-radio{
   display: inline-block;
   /*width: 38% !important;*/
@@ -427,6 +433,11 @@ input:-webkit-autofill:active {
 .build-new-board .search-user-text{
   display: inline-block !important;
   width: 40% !important;
+}
+
+button:active {
+  background: rgba(0,0,0,0.01) !important;
+
 }
 
 .toggleSessionsView {
@@ -493,6 +504,11 @@ input:-webkit-autofill:active {
   text-align: left;
 }
 
+.sessionListButton:hover {
+  background: rgba(0,0,0,0.5);
+  cursor: pointer;
+}
+
 .sessionListButton p{
   padding-top: 8px;
   margin: 0;
@@ -535,6 +551,9 @@ h3{
   padding                    : 20px;
   z-index: 100;
 
+button:hover{
+  background: rgba(0,0,0,.5);
+  cursor: pointer;
 }
 
 .color-popover {
