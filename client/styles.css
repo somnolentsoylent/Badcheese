@@ -127,7 +127,7 @@ canvas:hover {
 
 .nav {
   height: 50px;
-  background: none;
+  background: rgba(0,0,0,0.3);
   -moz-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
   -webkit-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
   z-index: 5;
@@ -146,7 +146,7 @@ canvas:hover {
   display: block;
   float: left;
   position: relative;
-  background: inherit;
+  background: none;
   line-height: 50px;
 }
 
@@ -336,11 +336,13 @@ input:-webkit-autofill:active {
 }
 
 .profile-container{
+  margin-top: 23px;
   float: left;
   box-sizing: border-box;
   width: 30%;
   text-align: center;
   padding-left: 40px;
+  padding-bottom: 40px;
 }
 
 .fullName{
@@ -362,7 +364,8 @@ input:-webkit-autofill:active {
   text-align: center;
 }
 .profile-section{
-   margin: 0px; 
+   margin: 0px;
+    
  /*border: 1px solid red;*/
 
 }
@@ -376,7 +379,10 @@ input:-webkit-autofill:active {
   text-align: center;
   background: rgba(0,0,0,0.07);
   margin-right: 30px;
-
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, .3);
+  border:none;
+  border-radius: 4px;
+  padding-bottom: 40px;
 }
 
 .build-new-board input[type="radio"]{
@@ -410,6 +416,10 @@ input:-webkit-autofill:active {
   outline:none;
   margin-top: 5px;
 }
+
+.build-new-board ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: white;
+}
 .build-new-board button{
   margin-top: 10px;
   width: 80%;
@@ -418,10 +428,11 @@ input:-webkit-autofill:active {
   height:50px;
   font-size: 20px;
   letter-spacing: 3px;
-  border:none;
   color: white;
-  border: 1px solid rgba(255,255,255,0.4);
   background: rgba(0,0,0,0.3);
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, .6);
+  border:none;
+  border-radius: 4px;
 }
 
 .build-new-board .search-user-radio{
@@ -446,9 +457,10 @@ input:-webkit-autofill:active {
 /*   height:50px; */
   font-size: 15px;
 /*   letter-spacing: 3px; */
-  border: none;
   color: white;
-  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, .6);
+  border:none;
+  border-radius: 4px;
   background: rgba(0,0,0,0.3);
 }
 
@@ -456,6 +468,9 @@ input:-webkit-autofill:active {
   background: rgba(0,0,0,0.07);
   text-align: center;
   margin-right: 30px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, .3);
+  border:none;
+  border-radius: 4px;
 }
 
 .roomsTitle{
@@ -485,9 +500,10 @@ input:-webkit-autofill:active {
   /*height:50px;*/ 
   font-size: 20px;
 /*   letter-spacing: 3px; */
-  border:none;
   color: white;
-  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, .6);
+  border:none;
+  border-radius: 4px;
   background: rgba(0,0,0,0.3);
   font-family: arial;
   padding-top: 15px;
