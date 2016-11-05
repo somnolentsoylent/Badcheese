@@ -1,5 +1,4 @@
 import React from 'react';
-import { CirclePicker } from 'react-color';
 
 
 export default class ToolBar extends React.Component {
