@@ -63,7 +63,6 @@ io.on('connection', (socket) => {
         liveBoard.reset();
         liveBoard.board.shapes = shapes;
         liveBoard.board.next = length;
-        console.log('new Live Board', liveBoard.board);
         io.to(id).emit('newBoard', liveBoard.board);
       })
       socket.on('resetBoard', () => {
@@ -87,6 +86,18 @@ io.on('connection', (socket) => {
           io.to(id).emit('renderme', changes);
         });
       });
+      socket.on('peerLeave', peerId => {
+        let i = peers[id].indexOf(peerId);
+        if (i != -1) {
+          peers[id].splice(i ,1);
+        }
+      })
+      socket.on('disconnect', data => {
+        if (io.sockets.adapter.rooms[id]) {
+          peers[id] =[];
+          console.log('sockets ', io.sockets.adapter.rooms[id]);
+        }
+      })
     }
   });
 });
