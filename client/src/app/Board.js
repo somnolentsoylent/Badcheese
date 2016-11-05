@@ -315,6 +315,14 @@ class Board extends React.Component {
   reset() {
    socket.emit('resetBoard');
   }
+  componentWillUnmount() {
+    let streams = this.state.localStream.getTracks();
+    streams[0].stop();
+    streams[1].stop();
+    socket.emit('peerLeave', this.props.user._id);
+    socket.disconnect(2);
+    peer.destroy();
+  }
   render() {
 
     return (
