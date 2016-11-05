@@ -6,9 +6,7 @@
   "scripts": {
     "test": "mocha ./specs test",
     "start": "node server/server.js",
-    "build": "webpack --config ./webpack.config.js --progress --colors",
-
-
+    "build": "webpack --config ./webpack.config.js --progress --colors"
   },
   "repository": {
     "type": "git",
