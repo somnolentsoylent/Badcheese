@@ -378,7 +378,6 @@ h5 {
   outline:none;
   margin-top: 5px;
 }
-
 .build-new-board button{
   margin-top: 10px;
   width: 80%;
@@ -392,7 +391,6 @@ h5 {
   border: 1px solid rgba(255,255,255,0.4);
   background: rgba(0,0,0,0.3);
 }
-
 .build-new-board .search-user-radio{
   display: inline-block;
   /*width: 38% !important;*/
