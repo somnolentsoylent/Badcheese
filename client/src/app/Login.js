@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 
 export default class Login extends React.Component {
 	constructor(props) {
@@ -7,20 +8,16 @@ export default class Login extends React.Component {
 	}
 
 	login() {
-		var loginInfo = {
-		  email: ReactDOM.findDOMNode(this.refs.email).value,
-		  password: ReactDOM.findDOMNode(this.refs.password).value
-		}
-		fetch('http://localhost:3000/api/users/login',{
-      method: 'POST',
-      headers: { "Content-Type" : "application/json" },
-      body: JSON.stringify(loginInfo)
+	  let loginEmail = ReactDOM.findDOMNode(this.refs.email).value;
+	  let loginPassword = ReactDOM.findDOMNode(this.refs.password).value;
+
+		axios.post('http://localhost:3000/api/users/login',{
+			email: loginEmail,
+			password: loginPassword
   	})
-    .then(response => {
-      return response.json()
-    })
-    .then( user => {
-      var user = user || {email: 'null'};
+    .then( response => {
+      var user = response.data || {email: 'null'};
+			console.log(user);
       window.localStorage.setItem('user', user.email);
       this.props.login(user);
     })

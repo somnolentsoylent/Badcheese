@@ -2,13 +2,28 @@ html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  font-family: 'oblique';
+  font-family: 'Montserrat', sans-serif;
   height: 100%;
   background: linear-gradient(230deg, rgb(75, 207, 147), rgb(75, 121, 207), rgb(162, 75, 207)) 0% 0% / 300% 300%;
   animation: animation 30s ease infinite;
   -webkit-animation: animation 30s ease infinite;
   -moz-animation: animation 30s ease infinite;
 }
+
+button, input, textarea {
+  outline: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.refresh-spinner {
+  -webkit-animation:spin 2s linear infinite;
+  -moz-animation:spin 2s linear infinite;
+  animation:spin 2s linear infinite;
+}
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
 @-webkit-keyframes animation {
     0%{background-position:0% 50%}
@@ -40,6 +55,10 @@ h1 {
 
 canvas {
   background-color: aliceblue;
+}
+
+canvas:hover {
+  cursor: crosshair;
 }
 
 .mid-grid {
@@ -119,7 +138,7 @@ canvas {
 
 .nav {
   height: 50px;
-  background: #6c9ddd;
+  background: rgba(0,0,0,0.3);
   -moz-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
   -webkit-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
   z-index: 5;
@@ -138,7 +157,7 @@ canvas {
   display: block;
   float: left;
   position: relative;
-  background: inherit;
+  background: none;
   line-height: 50px;
 }
 
@@ -253,12 +272,24 @@ h5 {
   letter-spacing: 3px;
   border:none;
   color: white;
-  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, .6);
   background: rgba(0,0,0,0.3);
+}
+
+button:active {
+  -webkit-box-shadow: inset 0px 0px 45px 1px rgba(0,0,0,0.49);
+  -moz-box-shadow: inset 0px 0px 45px 1px rgba(0,0,0,0.49);
+  box-shadow: inset 0px 0px 45px 1px rgba(0,0,0,0.49);
 }
 
 .login ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: white;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s;
 }
 
 .auth-choices {
@@ -271,15 +302,22 @@ h5 {
 }
 
 .auth-choices button {
+  border-radius: 4px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, .6);
   background: rgba(0,0,0,0.4);
   color:white;
   border:none;
   text-align: center;
   box-sizing: border-box;
-  border: 1px solid rgba(255,255,255,0.4);
   height:40px;
   font-size: 16px;
   width: 50%;
+}
+
+.auth-choices button:active {
+  -webkit-box-shadow: inset 0px 0px 45px 1px rgba(0,0,0,0.49);
+  -moz-box-shadow: inset 0px 0px 45px 1px rgba(0,0,0,0.49);
+  box-shadow: inset 0px 0px 45px 1px rgba(0,0,0,0.49);
 }
 
 .videos {
@@ -309,13 +347,19 @@ h5 {
 }
 
 .profile-container{
-  /*border: 1px solid red;*/
+  margin-top: 23px;
   float: left;
   box-sizing: border-box;
   width: 30%;
   text-align: center;
   padding-left: 40px;
+  padding-bottom: 40px;
+}
 
+.fullName{
+  color: white;
+  font-size: 18px;
+  letter-spacing: 1px;
 }
 
 .rightside-container{
@@ -325,12 +369,16 @@ h5 {
   float: left;
   box-sizing: border-box;
 /*   padding-left: 10px; */
-  
+
   width: 70%;
   text-align: center;
 }
 .profile-section{
-   margin: 0px; 
+   margin: 0px;
+<<<<<<< 56334d99f6c3e0f55bc202a56d02e5b3a9f426b2
+
+=======
+>>>>>>> add new font
  /*border: 1px solid red;*/
 
 }
@@ -344,7 +392,10 @@ h5 {
   text-align: center;
   background: rgba(0,0,0,0.07);
   margin-right: 30px;
-
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, .3);
+  border:none;
+  border-radius: 4px;
+  padding-bottom: 40px;
 }
 
 .build-new-board input[type="radio"]{
@@ -378,6 +429,10 @@ h5 {
   outline:none;
   margin-top: 5px;
 }
+
+.build-new-board ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: white;
+}
 .build-new-board button{
   margin-top: 10px;
   width: 80%;
@@ -386,11 +441,13 @@ h5 {
   height:50px;
   font-size: 20px;
   letter-spacing: 3px;
-  border:none;
   color: white;
-  border: 1px solid rgba(255,255,255,0.4);
   background: rgba(0,0,0,0.3);
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, .6);
+  border:none;
+  border-radius: 4px;
 }
+
 .build-new-board .search-user-radio{
   display: inline-block;
   /*width: 38% !important;*/
@@ -405,7 +462,7 @@ h5 {
 .toggleSessionsView {
 /*   text-align: left; */
 /*   margin-top: 10px; */
-  width: 15%; 
+  width: 15%;
   display: inline-block;
   margin-right: 40px;
 
@@ -413,9 +470,10 @@ h5 {
 /*   height:50px; */
   font-size: 15px;
 /*   letter-spacing: 3px; */
-  border: none;
   color: white;
-  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, .6);
+  border:none;
+  border-radius: 4px;
   background: rgba(0,0,0,0.3);
 }
 
@@ -423,16 +481,18 @@ h5 {
   background: rgba(0,0,0,0.07);
   text-align: center;
   margin-right: 30px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, .3);
+  border:none;
+  border-radius: 4px;
 }
 
 .roomsTitle{
   color: white;
-  font-family: arial;
   font-weight: normal;
   padding-top: 10px;
   padding-bottom: 10px;
   margin: 0px;
-  
+
 }
 
 .sessionsList{
@@ -452,11 +512,11 @@ h5 {
   /*height:50px;*/
   font-size: 20px;
 /*   letter-spacing: 3px; */
-  border:none;
   color: white;
-  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, .6);
+  border:none;
+  border-radius: 4px;
   background: rgba(0,0,0,0.3);
-  font-family: arial;
   padding-top: 15px;
   padding-bottom: 15px;
 }
@@ -464,6 +524,13 @@ h5 {
 .sessionSubComponents {
   margin-left: 20px;
   text-align: left;
+}
+
+.sessionListButton:hover {
+  background: rgba(0,0,0,0.5);
+
+  cursor: pointer;
+
 }
 
 .sessionListButton p{
@@ -483,5 +550,87 @@ h3{
   margin: 0
 }
 
+.overlay {
+    position          : fixed;
+    top               : 0;
+    left              : 0;
+    right             : 0;
+    bottom            : 0;
+    background-color   : rgba(0, 0, 0, 0.1);
+    z-index:99;
+  }
+.content {
+  position                   : fixed;
+  text-align: center;
+  display: block;
+  box-sizing: border-box;
+  width: 50%;
+  margin-top: 200px;
+  margin-left: 25%;
+  overflow                   : auto;
+  outline                    : none;
+  padding                    : 20px;
+  z-index: 100;
+  color: black;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, .6);
+  border:none;
+  border-radius: 4px;
+  background: white;
+}
+
+.topBarItem{
+  display: inline;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+.topBarItem:hover{
+  cursor: pointer;
+  color:purple;
+}
+
+.tools:hover{
+  cursor: pointer;
+  color:purple;
+}
+
+button:hover{
+  background: rgba(0,0,0,.5);
+  cursor: pointer;
+}
+
+.color-popover {
+  position: absolute,
+  z-index: 10
+}
+
+.coler-cover {
+  position: fixed,
+  height:120px;
+  width:80px;
+  top: 0px,
+  right: 0px,
+  bottom: 0px,
+  left: 0px
+}
+
+html ::-webkit-scrollbar-track
+{
+    background-color: transparent;
+}
+
+html ::-webkit-scrollbar
+{
+    background-color: transparent;
+}
+
+html ::-webkit-scrollbar-thumb
+{
+    background-color: white;
+    border-radius: 5px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
 
 

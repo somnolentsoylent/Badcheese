@@ -9,13 +9,16 @@ var mongoose = require('mongoose');
 var bluebird = require('bluebird');
 mongoose.Promise = bluebird;
 const passport = require('passport');
+const User = require('./schemas/userSchema.js')
 
 
-const port = 3000;
+const port = process.env.PORT || 3000;
+
 
 //connect the database
 if (!process.argv[2]) {
-  mongoose.connect('mongodb://localhost/drawmie');
+  const db = process.env.MONGODB_URI || 'mongodb://localhost/drawmie'
+  mongoose.connect(db);
   mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
   mongoose.connection.on('connected', function callback () {
     console.log('Mongoose connection open on mongodb://localhost/drawmie!');
@@ -43,7 +46,7 @@ io.on('connection', (socket) => {
   socket.on('addMeToRoom', (id) => {
     chatRooms[id] = chatRooms[id] || []
     socket.emit('fetchMessages', chatRooms[id])
-    const liveBoard = util.doGetBoard(id);
+    let liveBoard = util.doGetBoard(id);
     if (liveBoard) {
       socket.join(id);
       io.to(id).emit('renderme', liveBoard.board);
@@ -51,6 +54,20 @@ io.on('connection', (socket) => {
         peers[id] = peers[id] || [];
         peers[id].push(peerId);
         socket.emit('peers', peers[id]);
+      })
+      socket.on('boardChange', shapes => {
+        var length = 0;
+        for (var key in shapes) {
+          length++;
+        }
+        liveBoard.reset();
+        liveBoard.board.shapes = shapes;
+        liveBoard.board.next = length;
+        io.to(id).emit('newBoard', liveBoard.board);
+      })
+      socket.on('resetBoard', () => {
+        liveBoard.reset();
+        io.to(id).emit('newBoard', liveBoard.board)
       })
       socket.on('newStreamer', peerId => {
         let i = peers[id].indexOf(peerId);
@@ -69,6 +86,18 @@ io.on('connection', (socket) => {
           io.to(id).emit('renderme', changes);
         });
       });
+      socket.on('peerLeave', peerId => {
+        let i = peers[id].indexOf(peerId);
+        if (i != -1) {
+          peers[id].splice(i ,1);
+        }
+      })
+      socket.on('disconnect', data => {
+        if (io.sockets.adapter.rooms[id]) {
+          peers[id] =[];
+          console.log('sockets ', io.sockets.adapter.rooms[id]);
+        }
+      })
     }
   });
 });

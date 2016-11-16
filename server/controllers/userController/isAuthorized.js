@@ -1,8 +1,7 @@
 module.exports = (req, res) => {
-  console.log(req.user);
   if (req.user) {
-    res.send('User authorized');
+    res.send(req.user);
   } else {
-    res.send('User not authorized')
+    res.status(401).send('User not authorized');
   }
 }

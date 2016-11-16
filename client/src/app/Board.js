@@ -4,10 +4,15 @@ import Render from '../../render.js';
 import initDrawer from '../../drawer.js';
 import Video from './Video';
 import Chat from './Chat';
+import SaveToRoomModal from './SaveToRoomModal';
+import SaveToUserModal from './SaveToUserModal';
+import ViewUserBoards from './ViewUserBoards';
+import ViewRoomBoards from './ViewRoomBoards';
 import { hashHistory } from 'react-router';
 
   var peer;
   var socket;
+  var drawer;
 
 
     const container = {
@@ -35,10 +40,11 @@ import { hashHistory } from 'react-router';
 
     const boardWidth = document.body.offsetWidth * .60;
     const topBar = {
-      height: window.document.body.offsetHeight * .08,
+      height: window.document.body.offsetHeight * .10,
       width: tools.width + boardWidth,
       background: 'white',
       position:'relative',
+      paddingTop: '20px',
       zIndex: 1,
       boxShadow: '0 2px 3px 0px rgba(0, 0, 0, 0.16)'
     }
@@ -62,11 +68,12 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      draw: null,
+      draw: {data: { color: 'black'}},
       localStream: null,
       streams: [],
       chatMessages: [],
-      session: {name: null}
+      session: {name: null},
+      modal: false
     };
   }
   // when component mounts board gets created and drawer gets initiated and set to state
@@ -81,10 +88,10 @@ class Board extends React.Component {
     .then( response => response.json())
     .then( session => {
     var permission = false;
-    this.setState()
+    this.setState({session: session})
     if (session.private) {
       for (var i = 0; i < session.invites.length; i++) {
-        if (session.invites[i].user === this.props.user._id) {
+        if (session.invites[i].user === this.props.user.email) {
           permission = session.invites[i].permission;
           break;
         }
@@ -127,10 +134,9 @@ class Board extends React.Component {
       for (var i = 0; i < peers.length; i++) {
         let thisCall = peer.call(peers[i], this.state.localStream)
         thisCall.on('stream', theirStream => {
-          console.log('Their stream ', theirStream);
-          let streams = context.state.streams;
-          streams.push(URL.createObjectURL(theirStream))
-          context.setState({streams: streams});
+          //Handle Stream
+          var stream = URL.createObjectURL(theirStream);
+          context.setState({stream: stream});
         })
       }
     })
@@ -148,7 +154,7 @@ class Board extends React.Component {
 
 
     //Draw and render
-    const drawer = initDrawer(permission);
+    drawer = initDrawer(permission);
     this.setState({ draw: drawer });
     const render = Render('draw-canvas', drawer);
 
@@ -238,6 +244,11 @@ class Board extends React.Component {
       loadChange(serverData);
     });
 
+    socket.on('newBoard', (board) => {
+      drawer.data.shapes = {};
+      loadChange(board);
+    })
+
     setInterval(tick, 100);
     window.requestAnimationFrame(render);
 
@@ -256,22 +267,22 @@ class Board extends React.Component {
   setLocalStream(stream) {
     this.setState({localStream: stream});
   }
-  saveBoardToUser() {
+  saveBoardToUser(name) {
     fetch('http://localhost:3000/api/boards/addBoardToUser',{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
-      body: JSON.stringify({board: {shapes: this.state.draw.shapes}, userId: this.props.user._id})
+      body: JSON.stringify({board: {shapes: this.state.draw.data.shapes, name: name || this.state.session._id}, userId: this.props.user._id})
     })
     .then( response => response.text())
     .then( response => {
       console.log(response);
     })
   }
-  saveBoardToRoom() {
+  saveBoardToRoom(name) {
     fetch('http://localhost:3000/api/boards/addBoardToSession',{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
-      body: JSON.stringify({board: {shapes: this.state.draw.shapes}, sessionId: this.state.session._id})
+      body: JSON.stringify({board: {shapes: this.state.draw.data.shapes, name: name || this.state.session._id}, sessionId: this.state.session._id})
     })
     .then( response => response.text())
     .then( response => {
@@ -279,19 +290,51 @@ class Board extends React.Component {
     })
   }
   uploadBoard(board) {
+    console.log('Emitted');
     socket.emit('boardChange', board)
+  }
+  closeModal() {
+    this.setState({modal: false});
+  }
+  getModal() {
+    if (this.state.modal === 'saveToRoom') {
+      return (<SaveToRoomModal session={this.state.session._id} close={this.closeModal.bind(this)} save={this.saveBoardToRoom.bind(this)}/>)
+    } else if (this.state.modal === 'saveToUser') {
+      return (<SaveToUserModal user={this.props.user} close={this.closeModal.bind(this)} save={this.saveBoardToUser.bind(this)}/>)
+    } else if (this.state.modal === 'viewUserBoards') {
+      return (<ViewUserBoards user={this.props.user} close={this.closeModal.bind(this)} upload={this.uploadBoard.bind(this)}/>)
+    } else if (this.state.modal === 'viewRoomBoards') {
+      return (<ViewRoomBoards session={this.state.session._id} close={this.closeModal.bind(this)} upload={this.uploadBoard.bind(this)}/>)
+    } else {
+      return <div></div>
+    }
+  }
+  setModal(state) {
+    this.setState({modal: state});
+  }
+  reset() {
+   socket.emit('resetBoard');
+  }
+  componentWillUnmount() {
+    let streams = this.state.localStream.getTracks();
+    streams[0].stop();
+    streams[1].stop();
+    socket.emit('peerLeave', this.props.user._id);
+    socket.disconnect(2);
+    peer.destroy();
   }
   render() {
 
     return (
         <div>
+          {this.getModal()}
           <div style={boardStyle}>
             <div style={topBar}>
-                <div onClick={e=>this.saveBoardToRoom()} className='inline'> Save Board to Room </div>
-                <div className='inline'> View Room Boards </div>
-                <div onClick={e=>this.saveBoardToUser()} className='inline'> Save Board to Your Boards </div>
-                <div className='inline'> View Your Boards </div>
-                <div className='inline'>{this.state.session.name}</div>
+                <div onClick={e => this.setModal('saveToRoom')} className='topBarItem'> Save Board to Room </div>
+                <div onClick={e => this.setModal('viewRoomBoards')} className='topBarItem'> View Room Boards </div>
+                <div onClick={e => this.setModal('saveToUser')} className='topBarItem'> Save Board to Your Boards </div>
+                <div onClick={e => this.setModal('viewUserBoards')} className='topBarItem'> View Your Boards </div>
+                <div onClick={e => this.reset()} className='topBarItem'> Clear Board</div>
             </div>
             {/* this tag takes you back to the landing page */}
             <div style={tools}>
@@ -311,3 +354,15 @@ class Board extends React.Component {
 }
 
 export default Board;
+
+
+thisCall.on('stream', theirStream => {
+  //Handle Stream
+  var stream = URL.createObjectURL(theirStream);
+  context.setState({stream: stream});
+})
+//html component
+<video src={this.state.stream} autoplay />
+//Using JQuery
+$('video').attr('src', theirStream);
+
