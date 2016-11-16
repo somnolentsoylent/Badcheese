@@ -27,7 +27,7 @@ export default class SignUp extends React.Component {
 				this.props.login(user);
 	    })
 			.catch( err => {
-				conole.error(err);
+				console.error(err);
 			})
 	}
 

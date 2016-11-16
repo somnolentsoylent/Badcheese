@@ -612,12 +612,25 @@ button:hover{
   bottom: 0px,
   left: 0px
 }
-<<<<<<< 56334d99f6c3e0f55bc202a56d02e5b3a9f426b2
+
+html ::-webkit-scrollbar-track
+{
+    background-color: transparent;
+}
+
+html ::-webkit-scrollbar
+{
+    background-color: transparent;
+}
+
+html ::-webkit-scrollbar-thumb
+{
+    background-color: white;
+    border-radius: 5px;
+}
 
 .cursor-pointer {
   cursor: pointer;
 }
 
 
-=======
->>>>>>> add new font

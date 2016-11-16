@@ -3,6 +3,8 @@ import Auth from './Auth';
 import Nav from './Nav';
 import axios from 'axios';
 
+window.myApiRoute = '';
+
 const spinnerContainer = {
   display: 'fixed',
   top: 0,

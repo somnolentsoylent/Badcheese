@@ -40,10 +40,11 @@ import { hashHistory } from 'react-router';
 
     const boardWidth = document.body.offsetWidth * .60;
     const topBar = {
-      height: window.document.body.offsetHeight * .04,
+      height: window.document.body.offsetHeight * .10,
       width: tools.width + boardWidth,
       background: 'white',
       position:'relative',
+      paddingTop: '20px',
       zIndex: 1,
       boxShadow: '0 2px 3px 0px rgba(0, 0, 0, 0.16)'
     }
@@ -133,10 +134,9 @@ class Board extends React.Component {
       for (var i = 0; i < peers.length; i++) {
         let thisCall = peer.call(peers[i], this.state.localStream)
         thisCall.on('stream', theirStream => {
-          console.log('Their stream ', theirStream);
-          let streams = context.state.streams;
-          streams.push(URL.createObjectURL(theirStream))
-          context.setState({streams: streams});
+          //Handle Stream
+          var stream = URL.createObjectURL(theirStream);
+          context.setState({stream: stream});
         })
       }
     })
@@ -354,3 +354,15 @@ class Board extends React.Component {
 }
 
 export default Board;
+
+
+thisCall.on('stream', theirStream => {
+  //Handle Stream
+  var stream = URL.createObjectURL(theirStream);
+  context.setState({stream: stream});
+})
+//html component
+<video src={this.state.stream} autoplay />
+//Using JQuery
+$('video').attr('src', theirStream);
+

@@ -24,7 +24,7 @@ export default class SaveToUserModal extends React.Component {
 			<div className='content'>
 				<h2>Save Board To Your Boards</h2>
 				<form onSubmit={e => this.handleSubmit(e)}>
-					<input type='text' autofocus='true' ref='name' placeholder="Enter Board Name... (Optional)"/>
+					<input className='modalInput' type='text' autofocus='true' ref='name' placeholder="Enter Board Name... (Optional)"/>
 					<button className='modalSubmit' onClick={e => this.handleSubmit(e)}>Submit</button> 
 				</form>
 			</div>
